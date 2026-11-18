@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Lau · AI Agent / LLM 应用工程师</title>
+  <meta name="description" content="刘悦（Lau）—— AI Agent / LLM 应用工程师。关注 Agent 的记忆可信、动作受控与可评测性。开源贡献、项目展示与博客。" />
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="wrap topbar-inner">
+      <a class="brand" href="./">Lau · AI Agent</a>
+      <nav class="topbar-links">
+        <a href="#projects">项目</a>
+        <a href="#opensource">开源</a>
+        <a href="#blog">博客</a>
+        <a href="https://github.com/lau0708" target="_blank" rel="noopener">GitHub</a>
+        <button class="theme-btn" id="theme-toggle" type="button" aria-label="切换主题">🌓</button>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="wrap">
+      <h1>刘悦 · Lau</h1>
+      <p class="role">AI Agent / LLM 应用工程师</p>
+      <p class="lead">
+        做 Agent 系统，能跑通只是起点。我把更多时间花在三个问题上：
+        <strong>它记住的东西是不是真的</strong>、<strong>它动手之前谁说了算</strong>、
+        <strong>它做完了凭什么说做对了</strong>。下面的项目与贡献，分别从记忆、授权、评测和开源协作四个方向回答这三件事。
+      </p>
+      <div class="hero-actions">
+        <a class="btn primary" href="https://github.com/lau0708" target="_blank" rel="noopener">GitHub 主页</a>
+        <a class="btn" href="mailto:lau0708@qq.com">lau0708@qq.com</a>
+        <a class="btn" href="#blog">读博客</a>
+      </div>
+      <div class="oss-badge">
+        ⭐ 3 个 PR 已合入 bytedance/deer-flow（83k★，LangGraph Agent 框架）
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="projects">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>项目</h2>
+        <span class="sub">都能在 GitHub 上点开、跑通、复核</span>
+      </div>
+      <p class="desc">简历上的个人项目在这里都有一份完整展示：是什么、解决了什么真实问题、用什么技术、怎么做取舍。</p>
+
+      <div class="grid">
+        <article class="card">
+          <h3><a href="https://github.com/lau0708/cross-border-crm" target="_blank" rel="noopener">跨境客户经营系统 · Agent 原生 CRM</a></h3>
+          <div class="tags">
+            <span class="tag">TypeScript</span><span class="tag">React</span><span class="tag">Supabase</span>
+            <span class="tag">Mem0</span><span class="tag">Langfuse</span><span class="tag">Multi-Agent</span>
+          </div>
+          <p>面向跨境销售在 WhatsApp 上的客户跟进场景。CRM 存业务事实，Agent 驱动跟进行动，Harness 管执行边界与授权——回答「记忆不可信」「自动跟进危险」「报告会撒谎」三个真实会伤人的问题。</p>
+          <div class="meta">
+            <a href="https://github.com/lau0708/cross-border-crm" target="_blank" rel="noopener">源码 ↗</a>
+            <span>·</span><a href="./posts/cross-border-crm-memory.html">设计笔记 ↗</a>
+          </div>
+        </article>
+
+        <article class="card">
+          <h3><a href="https://github.com/lau0708/pulseops" target="_blank" rel="noopener">PulseOps · 脉巡 — 设备工单闭环 Agent</a></h3>
+          <div class="tags">
+            <span class="tag">Node 20</span><span class="tag">React 19</span><span class="tag">Python</span>
+            <span class="tag">飞书卡片</span><span class="tag">MCP</span>
+          </div>
+          <p>巡检发现异常 → LLM 诊断根因 → 幂等建单 → 飞书推卡片 → 群里点按钮处置 → 关单自动沉淀经验。终点不是「看见异常」，而是「这张单被谁、在什么时候、用什么办法关掉」。</p>
+          <div class="meta">
+            <a href="https://github.com/lau0708/pulseops" target="_blank" rel="noopener">源码 ↗</a>
+            <span>·</span><a href="./posts/pulseops-close-loop.html">设计笔记 ↗</a>
+          </div>
+        </article>
+
+        <article class="card">
+          <h3><a href="https://github.com/lau0708/knowledge-agent-workbench" target="_blank" rel="noopener">knowledge-agent-workbench</a></h3>
+          <div class="tags">
+            <span class="tag">Python</span><span class="tag">FastAPI</span><span class="tag">ChromaDB</span>
+            <span class="tag">LangGraph</span><span class="tag">HITL</span>
+          </div>
+          <p>本地 RAG 知识库 + Agent 工作台：SQLite / ChromaDB 双存储索引、混合检索，手写 Workflow 与 LangGraph 双实现对照，HITL 审批与 Trace 监控。</p>
+          <div class="meta">
+            <a href="https://github.com/lau0708/knowledge-agent-workbench" target="_blank" rel="noopener">源码 ↗</a>
+          </div>
+        </article>
+
+        <article class="card">
+          <h3><a href="https://github.com/lau0708/oss-pr-skill" target="_blank" rel="noopener">oss-pr-skill</a></h3>
+          <div class="tags">
+            <span class="tag">Claude Code Skill</span><span class="tag">Shell</span>
+          </div>
+          <p>把「给开源做贡献」固化成证据驱动的流程：仓库筛选、自挖不变量 bug、红绿测试证明、CI 与 review 处理、面试叙事。用它向 deer-flow 提了 3 个 PR，全部已合并。</p>
+          <div class="meta">
+            <a href="https://github.com/lau0708/oss-pr-skill" target="_blank" rel="noopener">源码 ↗</a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="opensource">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>开源贡献</h2>
+        <span class="sub">bytedance/deer-flow · 83k★</span>
+      </div>
+      <p class="desc">三个都是自己挖出来的 bug——没抢 issue、没先问维护者，diff 都很小，修的却是仓库文档里写明、而某个实现悄悄违反的契约。</p>
+
+      <div class="pr-row">
+        <div class="pr-num">#5998</div>
+        <div class="pr-body">
+          <h3><a href="https://github.com/bytedance/deer-flow/pull/5998" target="_blank" rel="noopener">fix(channels): grant sandbox read bits to Feishu/DingTalk inbound uploads</a></h3>
+          <p>为飞书 / 钉钉入站附件补上沙箱读权限位，让文档里承诺的附件读取在实际实现中真正成立。</p>
+          <div class="meta">已合并 · 2026-09-28</div>
+        </div>
+      </div>
+
+      <div class="pr-row">
+        <div class="pr-num">#5703</div>
+        <div class="pr-body">
+          <h3><a href="https://github.com/bytedance/deer-flow/pull/5703" target="_blank" rel="noopener">fix(skills): resolve the user-scoped install content scan from its own config</a></h3>
+          <p>用户级安装的内容扫描改从自身配置解析，修掉配置来源不一致导致的扫描失效。</p>
+          <div class="meta">已合并 · 2026-09-22</div>
+        </div>
+      </div>
+
+      <div class="pr-row">
+        <div class="pr-num">#5663</div>
+        <div class="pr-body">
+          <h3><a href="https://github.com/bytedance/deer-flow/pull/5663" target="_blank" rel="noopener">fix(runtime): share one change position across an atomic thread operation</a></h3>
+          <p>让原子线程操作共享同一个变更位置，消除并发写入时的不一致。</p>
+          <div class="meta">已合并 · 2026-09-22</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="work">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>工作经历</h2>
+        <span class="sub">风越科技 · 2026.01 – 至今</span>
+      </div>
+      <div class="work">
+        <h3>面向跨境电商的 Agent 运行时平台 · AI 应用开发工程师</h3>
+        <p class="org">基于 Craft Agents 构建 Agent Harness 与运行时治理框架</p>
+        <p>让 Agent 在订单、库存、广告、客服工单等多个异构业务后台之间自主完成「发现异常 → 定位根因 → 决策 → 执行」的经营闭环。负责统一数据接入层、工具调用前的集中权限拦截、长链路决策的上下文管理，以及进程隔离与断点恢复。</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="blog">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>博客</h2>
+        <span class="sub">把项目里真正难的地方写出来</span>
+      </div>
+
+      <div class="pr-row">
+        <div class="pr-num">2026-09</div>
+        <div class="pr-body">
+          <h3><a href="./posts/deer-flow-3-prs.html">怎么给 83k star 的开源项目提 3 个 PR：测试不对称就是 bug 定位器</a></h3>
+          <p>没有抢 issue、没有先问维护者，三个 PR 全部合并。复盘一条可复用的启发式。</p>
+        </div>
+      </div>
+
+      <div class="pr-row">
+        <div class="pr-num">2026-11</div>
+        <div class="pr-body">
+          <h3><a href="./posts/pulseops-close-loop.html">Agent 的终点不是「看见异常」，是「关单」</a></h3>
+          <p>大屏只解决前半截，PulseOps 把后半截做成闭环留痕：确定性代码兜底、LLM 只做诊断、幂等是硬约束。</p>
+        </div>
+      </div>
+
+      <div class="pr-row">
+        <div class="pr-num">2026-11</div>
+        <div class="pr-body">
+          <h3><a href="./posts/cross-border-crm-memory.html">记忆不可信：把 CRM 的事实源交还给人工确认</a></h3>
+          <p>为什么 Mem0 只能做排序、不能做事实源；自动跟进为什么必须有独立授权闸门。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="wrap">
+      <p>
+        刘悦 · Lau — 正在找 AI Agent / LLM 应用工程师的机会。
+        <a href="mailto:lau0708@qq.com">lau0708@qq.com</a> ·
+        <a href="https://github.com/lau0708" target="_blank" rel="noopener">github.com/lau0708</a>
+      </p>
+      <p>本站托管于 GitHub Pages，可免费、长期访问。</p>
+    </div>
+  </footer>
+
+  <script src="./script.js"></script>
+</body>
+</html>

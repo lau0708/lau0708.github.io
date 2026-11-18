@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>记忆不可信：把 CRM 的事实源交还给人工确认 · Lau</title>
+  <meta name="description" content="为什么 Mem0 只能做排序、不能做事实源；自动跟进为什么必须有独立授权闸门；报告幻觉怎么用两层评测拦截。" />
+  <link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="wrap topbar-inner">
+      <a class="brand" href="../">Lau · AI Agent</a>
+      <nav class="topbar-links">
+        <a href="../">首页</a>
+        <a href="https://github.com/lau0708/cross-border-crm" target="_blank" rel="noopener">GitHub</a>
+        <button class="theme-btn" id="theme-toggle" type="button" aria-label="切换主题">🌓</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="post">
+    <a class="back" href="../#blog">← 返回博客</a>
+    <header>
+      <h1>记忆不可信：把 CRM 的事实源交还给人工确认</h1>
+      <p class="post-meta">Lau · 2026-11 · <a href="https://github.com/lau0708/cross-border-crm" target="_blank" rel="noopener">cross-border-crm</a> 设计复盘</p>
+    </header>
+    <article>
+      <p>跨境销售在 WhatsApp 上跟进客户，有两个根问题：<strong>记忆不可信</strong>，谁说过什么、客户偏好哪些，散落在会话里；<strong>自动跟进危险</strong>，没有约束的自动发送可能把「在谈」写成「已成交」，造成真实损失。</p>
+
+      <h2>记忆：排序器可以做，事实源不行</h2>
+      <p>一个常见的设计错误，是把向量记忆（比如 Mem0）当成客户事实的唯一来源。但它天然会有召回偏差、幻觉和过期信息——把「没检索到」误判成「客户没有这个偏好」，就可能在跟进时犯事实错误。</p>
+      <p>本系统的选择是：</p>
+      <ul>
+        <li><strong>本地 SQL 是唯一权威</strong>，保存人工确认过的客户事实。</li>
+        <li><strong>Mem0 只做排序</strong>，对已确认条目排序，绝不做事实源。</li>
+        <li>远端命中须过<strong>归属标识、运行标识、内容哈希</strong>三重核对，并映射回本地记录 ID，否则丢弃。</li>
+        <li>服务不可用时回退本地读取，并标明覆盖范围。</li>
+      </ul>
+      <p>一句话：<strong>能查证的事实才进入系统，模型只负责在这些事实之上排序和表达</strong>。</p>
+
+      <h2>授权：只读的专家，单一的写者</h2>
+      <p>多个 Agent 子代理如果都能直接写 CRM，责任面会被放大，冲突难审计。于是：</p>
+      <ul>
+        <li><strong>专家只读</strong>——只生产证据和字段断言，不产生写操作。</li>
+        <li><strong>父流程是唯一写者</strong>——所有外发动作（跟进、发送）必须过一道独立授权闸门。</li>
+        <li>专家以「字段值哈希 + 来源版本」产出断言，父流程据此区分事实分歧、版本漂移与互补片段。</li>
+      </ul>
+      <p>负责人改跟进方向时，以 Mission 方向版本开新 Run，撤销旧待执行动作、作废旧草稿、暂停旧客户发送——新指令照样要再过一次授权。</p>
+
+      <h2>评测：两层检查拦截「报告撒谎」</h2>
+      <p>即使每条引用都指向真实记录，结论仍可能写错——比如把「在谈」写成「已成交」。所以评测分两层：</p>
+      <ul>
+        <li>先核对成功工具观察里的<strong>来源标识与结构化字段</strong>。</li>
+        <li>再跑<strong>独立语义 Judge</strong>，用更严格的一层合并结论。</li>
+        <li>区分「引用未观察」「字段矛盾」「语义待复核」三类问题，并把失败样本做回归。</li>
+      </ul>
+      <p>已存评价必须匹配运行材料、评测规范和模型版本；资料变化后不能沿用旧高分——否则评测本身也会漂移。</p>
+    </article>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap">
+      <p><a href="mailto:lau0708@qq.com">lau0708@qq.com</a> · <a href="https://github.com/lau0708" target="_blank" rel="noopener">github.com/lau0708</a></p>
+    </div>
+  </footer>
+  <script src="../script.js"></script>
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Agent 的终点不是「看见异常」，是「关单」 · Lau</title>
+  <meta name="description" content="PulseOps 的设计哲学：大屏只解决前半截，把后半截做成闭环留痕。确定性代码兜底、LLM 只做诊断、幂等是硬约束。" />
+  <link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="wrap topbar-inner">
+      <a class="brand" href="../">Lau · AI Agent</a>
+      <nav class="topbar-links">
+        <a href="../">首页</a>
+        <a href="https://github.com/lau0708/pulseops" target="_blank" rel="noopener">GitHub</a>
+        <button class="theme-btn" id="theme-toggle" type="button" aria-label="切换主题">🌓</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="post">
+    <a class="back" href="../#blog">← 返回博客</a>
+    <header>
+      <h1>Agent 的终点不是「看见异常」，是「关单」</h1>
+      <p class="post-meta">Lau · 2026-11 · <a href="https://github.com/lau0708/pulseops" target="_blank" rel="noopener">PulseOps</a> 设计复盘</p>
+    </header>
+    <article>
+      <p>离散制造车间里，一条产线 4 台设备，值班的是班组长和 2 个维修工。<strong>没人盯得住 24 小时的曲线</strong>——异常通常在「已经停机之后」才被发现，工单靠口头传，处置结果留在师傅脑子里。</p>
+      <p>市面上很多「设备大屏」的终点是「看见异常」：曲线、告警、标红，很热闹。但看见之后呢？谁去处理、处理结果记在哪、下次同类故障能不能直接查到——这些才是真正决定价值的部分。</p>
+      <p><a href="https://github.com/lau0708/pulseops" target="_blank" rel="noopener">PulseOps</a> 的定位就是把这后半截做成闭环：<strong>巡检发现异常 → LLM 诊断根因 → 幂等建单 → 飞书推卡片 → 群里点按钮处置 → 关单自动沉淀经验</strong>。</p>
+
+      <h2>把不确定性关进一个格子</h2>
+      <p>Agent 项目最常见的坑，是把「不稳定的模型」铺满整条链路，结果一个环节抖动，整个流程瘫痪。</p>
+      <p>PulseOps 的做法是给每个环节指定角色：</p>
+      <ul>
+        <li><strong>巡检</strong>——确定性代码（Cron），定时取最新指标比阈值，越限就进诊断；已有未闭环工单就跳过。</li>
+        <li><strong>诊断</strong>——LLM，可降级。模型挂了不影响流程推进，只影响诊断质量。</li>
+        <li><strong>工单</strong>——确定性代码，建单、发飞书卡片、校验状态流转、关单时写回知识库。</li>
+      </ul>
+      <p>一句话：<strong>确定性代码兜底，LLM 只做它擅长的推理</strong>。这不是排斥模型，而是给不可靠的部分划定边界。</p>
+
+      <h2>幂等是硬约束，不是优化项</h2>
+      <p>巡检每几分钟跑一次，同一台设备、同一个异常，重跑不能凭空多出十张单。所以在「判异 → 建单」之间必须有一层幂等：已有未闭环工单时跳过，而不是再建一张。</p>
+      <p>这种约束在 demo 里看不出来，只有把系统放在「24 小时无人值守」的假设下，才会意识到它必须是对的，而不是「大部分时候对」。</p>
+
+      <h2>闭环的证据</h2>
+      <p>127 条回归用例 + GitHub Actions CI 卡在 PR 上，改动先过测试再说。飞书卡片点按钮后就地重绘成下一状态，处置结果在 3 秒预算内回写；关单时把这次处置沉淀成「故障码—症状—根因—处置」的知识条目，并带来源工单号溯源。</p>
+      <p>于是「这张单被谁、在什么时候、用什么办法关掉」——每一条都留痕，可审计。</p>
+    </article>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap">
+      <p><a href="mailto:lau0708@qq.com">lau0708@qq.com</a> · <a href="https://github.com/lau0708" target="_blank" rel="noopener">github.com/lau0708</a></p>
+    </div>
+  </footer>
+  <script src="../script.js"></script>
+</body>
+</html>
