@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>手写 Workflow 还是 LangGraph：同一个 RAG 做两遍对照 · Lau</title>
+  <meta name="description" content="本地 RAG 知识库 + Agent 工作台，用 SQLite/ChromaDB 双存储与混合检索，并把手写 Workflow 与 LangGraph 做了双实现对照。" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 216 216'%3E%3Crect width='216' height='216' rx='46' fill='%23171513'/%3E%3Cpath fill='%23d79376' d='M78 68v-8c0-14 10-24 24-24h6v30h10c22 0 38-14 38-34s-16-34-38-34h-18v40h-26v-8c0-14-10-24-24-24h-6v30h-10C12 36 6 50 6 70s6 34 34 34h18V64h26v8c0 14 10 24 24 24h6V66h10c22 0 38 14 38 34s-16 34-38 34h-18v-40h-26v8c0 14-10 24-24 24h-6v-30h-10c-22 0-38-14-38-34s16-34 38-34h18v40h26z'/%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="../">
+        <span class="brand-mark">L</span>
+        <span>Lau<small>AI AGENT ENGINEER</small></span>
+      </a>
+      <nav class="nav">
+        <a href="../#projects">项目</a>
+        <a href="../#opensource">开源</a>
+        <a href="../#blog">博客</a>
+        <a href="https://github.com/lau0708" target="_blank" rel="noopener">GitHub ↗</a>
+        <button class="theme-btn" id="theme-toggle" type="button" aria-label="切换主题">🌓</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="post">
+    <a class="back" href="../#blog">← 返回博客</a>
+    <header>
+      <h1>手写 Workflow 还是 LangGraph：同一个 RAG 做两遍对照</h1>
+      <p class="post-meta">Lau · 2026-10-31 · <a href="https://github.com/lau0708/knowledge-agent-workbench" target="_blank" rel="noopener">knowledge-agent-workbench</a> 复盘</p>
+    </header>
+    <article>
+      <p>在 <a href="https://github.com/lau0708/knowledge-agent-workbench" target="_blank" rel="noopener">knowledge-agent-workbench</a> 里，我把同一个 RAG + Agent 工作流做了<strong>两遍</strong>：一遍手写 Workflow，一遍用 LangGraph。不是为了炫技，而是想搞清楚框架到底帮我做了什么、没做什么。</p>
+
+      <h2>双存储索引 + 混合检索</h2>
+      <p>检索层用 SQLite 存结构化元数据、ChromaDB 存向量，走<strong>混合检索</strong>——关键词命中负责精确，向量召回负责语义。bge-small-zh 做嵌入，模型端接 DeepSeek，整体是本地优先、可自部署的形态。</p>
+
+      <h2>手写一遍，才知道每个节点在干什么</h2>
+      <p>手写 Workflow 没有任何魔法：状态就是一个显式的 dict，节点就是函数，边就是 if/else。它的好处是<strong>完全可控、好调试</strong>——任何一个环节的行为，代码里看得一清二楚。坏处是样板代码多，状态一复杂，维护成本就上来。</p>
+
+      <h2>再用 LangGraph 对照一遍</h2>
+      <p>LangGraph 把状态管理、节点/边、检查点这些通用能力做成了基础设施。同一套流程，用图来表达更清晰，也自带可观测性。但代价是：<strong>你得先理解它的状态模型和执行语义</strong>，否则出问题时会觉得它在黑盒里。</p>
+
+      <h2>对照的意义</h2>
+      <p>做完两遍，最大的收获是面试和实际排障时，能讲清楚「框架替我们解决了什么、我们仍然要对什么负责」。配套的 HITL 审批和 Trace 监控，也建立在对流程有完整理解的基础上，而不是把框架当黑盒调参数。</p>    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="row">
+        <a href="mailto:lau0708@qq.com">lau0708@qq.com</a>
+        <a href="https://github.com/lau0708" target="_blank" rel="noopener">github.com/lau0708</a>
+        <a href="../">返回首页</a>
+      </div>
+    </div>
+  </footer>
+  <script src="../script.js"></script>
+</body>
+</html>

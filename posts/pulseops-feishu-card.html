@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>飞书卡片 3 秒预算：把一张工单的闭环塞进一张卡 · Lau</title>
+  <meta name="description" content="报警卡片就是一张随身工单：接单 → 已处理 → 确认闭环，点按钮就地重绘，全部动作在 3 秒预算内返回。" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 216 216'%3E%3Crect width='216' height='216' rx='46' fill='%23171513'/%3E%3Cpath fill='%23d79376' d='M78 68v-8c0-14 10-24 24-24h6v30h10c22 0 38-14 38-34s-16-34-38-34h-18v40h-26v-8c0-14-10-24-24-24h-6v30h-10C12 36 6 50 6 70s6 34 34 34h18V64h26v8c0 14 10 24 24 24h6V66h10c22 0 38 14 38 34s-16 34-38 34h-18v-40h-26v8c0 14-10 24-24 24h-6v-30h-10c-22 0-38-14-38-34s16-34 38-34h18v40h26z'/%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="../">
+        <span class="brand-mark">L</span>
+        <span>Lau<small>AI AGENT ENGINEER</small></span>
+      </a>
+      <nav class="nav">
+        <a href="../#projects">项目</a>
+        <a href="../#opensource">开源</a>
+        <a href="../#blog">博客</a>
+        <a href="https://github.com/lau0708" target="_blank" rel="noopener">GitHub ↗</a>
+        <button class="theme-btn" id="theme-toggle" type="button" aria-label="切换主题">🌓</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="post">
+    <a class="back" href="../#blog">← 返回博客</a>
+    <header>
+      <h1>飞书卡片 3 秒预算：把一张工单的闭环塞进一张卡</h1>
+      <p class="post-meta">Lau · 2026-11-12 · <a href="https://github.com/lau0708/pulseops" target="_blank" rel="noopener">PulseOps</a> 设计复盘</p>
+    </header>
+    <article>
+      <p>PulseOps 的工单处置不在浏览器里，而在飞书群里。对班组长和维修工来说，<strong>报警卡片就是一张随身的工单档案</strong>——他们不会去开网页，他们只想在群里把事办了。</p>
+
+      <h2>一张卡 = 一张单的完整档案</h2>
+      <p>卡片按工单的生命周期组织：</p>
+      <ul>
+        <li><strong>头部</strong>——设备 + 严重度着色（紧急红 / 一般橙）。</li>
+        <li><strong>指标区</strong>——超限项与实测值，比如「振动 12.7 mm/s &gt; 阈值 8」。</li>
+        <li><strong>诊断区</strong>——根因、处置方案、置信度，来自 LLM 诊断节点。</li>
+        <li><strong>操作区</strong>——接单 → 已处理 → 确认闭环，三个按钮。</li>
+        <li><strong>收尾</strong>——闭环后追加一行「经验已沉淀：KN-xxxx」。</li>
+      </ul>
+
+      <h2>就地重绘，而不是发新卡</h2>
+      <p>点按钮后，卡片<strong>就地重绘</strong>成下一个状态，不新发一张卡。这样群里的讨论上下文不会被打散，一张单的状态演进始终停在同一个地方。</p>
+
+      <h2>3 秒预算从哪来</h2>
+      <p>飞书卡片的回调有超时约束，超时后会触发重试或失效。所以从收到按钮点击，到完成状态校验、落库、回写，必须在 <strong>3 秒预算</strong>内完成。这个约束倒逼我们把状态机流转做得足够轻：确定性代码校验，LLM 不参与实时链路。</p>
+      <p>每一次流转都留痕——谁、何时、从哪个状态到哪个状态。卡片就地重绘是体验，留痕才是闭环能被审计的底气。</p>    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="row">
+        <a href="mailto:lau0708@qq.com">lau0708@qq.com</a>
+        <a href="https://github.com/lau0708" target="_blank" rel="noopener">github.com/lau0708</a>
+        <a href="../">返回首页</a>
+      </div>
+    </div>
+  </footer>
+  <script src="../script.js"></script>
+</body>
+</html>

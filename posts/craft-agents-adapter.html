@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>跨境电商 Agent 平台：把 N 个后台收敛成一套工具调用 · Lau</title>
+  <meta name="description" content="经营数据分散在库存/广告/订单/客服工单等多个系统，口径与时点不一致。基于 ServerBuilder 统一接入框架设计 Adapter，把异构接口收敛成标准工具调用。" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 216 216'%3E%3Crect width='216' height='216' rx='46' fill='%23171513'/%3E%3Cpath fill='%23d79376' d='M78 68v-8c0-14 10-24 24-24h6v30h10c22 0 38-14 38-34s-16-34-38-34h-18v40h-26v-8c0-14-10-24-24-24h-6v30h-10C12 36 6 50 6 70s6 34 34 34h18V64h26v8c0 14 10 24 24 24h6V66h10c22 0 38 14 38 34s-16 34-38 34h-18v-40h-26v8c0 14-10 24-24 24h-6v-30h-10c-22 0-38-14-38-34s16-34 38-34h18v40h26z'/%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="../">
+        <span class="brand-mark">L</span>
+        <span>Lau<small>AI AGENT ENGINEER</small></span>
+      </a>
+      <nav class="nav">
+        <a href="../#projects">项目</a>
+        <a href="../#opensource">开源</a>
+        <a href="../#blog">博客</a>
+        <a href="https://github.com/lau0708" target="_blank" rel="noopener">GitHub ↗</a>
+        <button class="theme-btn" id="theme-toggle" type="button" aria-label="切换主题">🌓</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="post">
+    <a class="back" href="../#blog">← 返回博客</a>
+    <header>
+      <h1>跨境电商 Agent 平台：把 N 个后台收敛成一套工具调用</h1>
+      <p class="post-meta">Lau · 2026-10-26 · 工作复盘 · <a href="https://github.com/lau0708" target="_blank" rel="noopener">风越科技 Craft Agents 平台</a></p>
+    </header>
+    <article>
+      <p>跨境电商的经营决策，第一步就卡在数据上：库存、广告、订单、客服工单，分散在多个后台系统里，<strong>口径不一致、时点不一致</strong>。Agent 要在这些系统之间自主完成「发现异常 → 定位根因 → 决策 → 执行」，如果每一步都要按各个后台各自的接口去写，主流程会被耦合成一团乱麻。</p>
+
+      <h2>问题不在接口多，在于没有统一的工具契约</h2>
+      <p>异构后台有两种典型形态：已经 MCP 化的，和只有 HTTP API 的。它们的分页方式、鉴权方式、错误码、时间口径都不一样。如果 Agent 主流程直接感知这些差异，每接一个系统就要改一次主流程。</p>
+
+      <h2>Adapter 收敛，主流程面向标准契约</h2>
+      <p>我们的做法是：基于 ServerBuilder 统一接入框架，设计统一数据源 Adapter，把 MCP 与 HTTP API 收敛成<strong>同一套标准工具调用</strong>。对外暴露的是统一的参数结构、返回结构和错误语义，对内再翻译成各后台自己的协议。</p>
+      <ul>
+        <li><strong>新数据源接入不改 Agent 主流程</strong>——主流程只面向标准工具契约，差异被 Adapter 隔离。</li>
+        <li>口径与时点统一在 Adapter 层处理，而不是散落在每个调用点。</li>
+        <li>错误码归一，Agent 看到的是同一种失败语义，而不是某家后台的原始报错。</li>
+      </ul>
+
+      <h2>为什么这一步值得先做</h2>
+      <p>Agent 的推理质量上限，取决于它拿到的事实质量。数据接入层如果不统一，后面再好的诊断、决策，都会建立在不一致的数据上——「发现异常」的第一步就错了，后面的闭环再完整也白搭。</p>    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="row">
+        <a href="mailto:lau0708@qq.com">lau0708@qq.com</a>
+        <a href="https://github.com/lau0708" target="_blank" rel="noopener">github.com/lau0708</a>
+        <a href="../">返回首页</a>
+      </div>
+    </div>
+  </footer>
+  <script src="../script.js"></script>
+</body>
+</html>

@@ -156,7 +156,7 @@
     </div>
   </section>
 
-  <section class="section" id="blog">
+    <section class="section" id="blog">
     <div class="wrap">
       <div class="pagehead">
         <p class="eyebrow">BLOG</p>
@@ -164,15 +164,39 @@
       </div>
 
       <div class="pr-row">
-        <div class="pr-num">2026-09</div>
+        <div class="pr-num">2026-11-17</div>
         <div class="pr-body">
-          <h3><a href="./posts/deer-flow-3-prs.html">怎么给 83k star 的开源项目提 3 个 PR：测试不对称就是 bug 定位器</a></h3>
-          <p>没有抢 issue、没有先问维护者，三个 PR 全部合并。复盘一条可复用的启发式。</p>
+          <h3><a href="./posts/agent-interview-three-questions.html">Agent 项目面试，面试官真正想问的三件事</a></h3>
+          <p>简历上的 Agent 项目很多，面试官真正想区分的不是做没做过，而是记忆可信、动作受控、可评测性这三件事。</p>
         </div>
       </div>
 
       <div class="pr-row">
-        <div class="pr-num">2026-11</div>
+        <div class="pr-num">2026-11-15</div>
+        <div class="pr-body">
+          <h3><a href="./posts/cross-border-crm-eval.html">报告会撒谎：用两层评测拦截 Agent 的幻觉</a></h3>
+          <p>即使每条引用都指向真实记录，结论仍可能写错。先做结构断言，再跑独立语义 Judge，两层合并出更严格的结论。</p>
+        </div>
+      </div>
+
+      <div class="pr-row">
+        <div class="pr-num">2026-11-14</div>
+        <div class="pr-body">
+          <h3><a href="./posts/cross-border-crm-memory.html">记忆不可信：把 CRM 的事实源交还给人工确认</a></h3>
+          <p>为什么 Mem0 只能做排序、不能做事实源；自动跟进为什么必须有独立授权闸门。</p>
+        </div>
+      </div>
+
+      <div class="pr-row">
+        <div class="pr-num">2026-11-12</div>
+        <div class="pr-body">
+          <h3><a href="./posts/pulseops-feishu-card.html">飞书卡片 3 秒预算：把一张工单的闭环塞进一张卡</a></h3>
+          <p>报警卡片就是一张随身工单：接单 → 已处理 → 确认闭环，点按钮就地重绘，全部动作在 3 秒预算内返回。</p>
+        </div>
+      </div>
+
+      <div class="pr-row">
+        <div class="pr-num">2026-11-11</div>
         <div class="pr-body">
           <h3><a href="./posts/pulseops-close-loop.html">Agent 的终点不是「看见异常」，是「关单」</a></h3>
           <p>大屏只解决前半截，PulseOps 把后半截做成闭环留痕：确定性代码兜底、LLM 只做诊断、幂等是硬约束。</p>
@@ -180,10 +204,42 @@
       </div>
 
       <div class="pr-row">
-        <div class="pr-num">2026-11</div>
+        <div class="pr-num">2026-11-08</div>
         <div class="pr-body">
-          <h3><a href="./posts/cross-border-crm-memory.html">记忆不可信：把 CRM 的事实源交还给人工确认</a></h3>
-          <p>为什么 Mem0 只能做排序、不能做事实源；自动跟进为什么必须有独立授权闸门。</p>
+          <h3><a href="./posts/oss-pr-skill-flow.html">把开源贡献做成可复用的流程：oss-pr-skill 的四个阶段</a></h3>
+          <p>仓库筛选、自挖不变量 bug、红绿测试证明、CI 与 review 处理——把贡献固化成证据驱动的流程。</p>
+        </div>
+      </div>
+
+      <div class="pr-row">
+        <div class="pr-num">2026-11-04</div>
+        <div class="pr-body">
+          <h3><a href="./posts/craft-agents-permission.html">工具执行前的安全边界：PreToolUse 与 safe/ask/allow-all</a></h3>
+          <p>用 SessionToolContext 注入凭据，PreToolUse 集中拦截，把安全边界从自觉变成管线。</p>
+        </div>
+      </div>
+
+      <div class="pr-row">
+        <div class="pr-num">2026-10-31</div>
+        <div class="pr-body">
+          <h3><a href="./posts/knowledge-agent-workbench-rag.html">手写 Workflow 还是 LangGraph：同一个 RAG 做两遍对照</a></h3>
+          <p>SQLite / ChromaDB 双存储与混合检索，手写 Workflow 与 LangGraph 双实现对照，讲清框架替你做了什么。</p>
+        </div>
+      </div>
+
+      <div class="pr-row">
+        <div class="pr-num">2026-10-26</div>
+        <div class="pr-body">
+          <h3><a href="./posts/craft-agents-adapter.html">跨境电商 Agent 平台：把 N 个后台收敛成一套工具调用</a></h3>
+          <p>基于 ServerBuilder 设计统一数据源 Adapter，把 MCP 与 HTTP API 收敛成标准工具调用，新数据源接入不改主流程。</p>
+        </div>
+      </div>
+
+      <div class="pr-row">
+        <div class="pr-num">2026-09-30</div>
+        <div class="pr-body">
+          <h3><a href="./posts/deer-flow-3-prs.html">怎么给 83k star 的开源项目提 3 个 PR：测试不对称就是 bug 定位器</a></h3>
+          <p>没有抢 issue、没有先问维护者，三个 PR 全部合并。复盘一条可复用的启发式。</p>
         </div>
       </div>
     </div>

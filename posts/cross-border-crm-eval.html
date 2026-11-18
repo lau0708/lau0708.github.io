@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>报告会撒谎：用两层评测拦截 Agent 的幻觉 · Lau</title>
+  <meta name="description" content="即使每条引用都指向真实记录，结论仍可能写错。先做结构断言，再跑独立语义 Judge，两层合并出更严格的结论。" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 216 216'%3E%3Crect width='216' height='216' rx='46' fill='%23171513'/%3E%3Cpath fill='%23d79376' d='M78 68v-8c0-14 10-24 24-24h6v30h10c22 0 38-14 38-34s-16-34-38-34h-18v40h-26v-8c0-14-10-24-24-24h-6v30h-10C12 36 6 50 6 70s6 34 34 34h18V64h26v8c0 14 10 24 24 24h6V66h10c22 0 38 14 38 34s-16 34-38 34h-18v-40h-26v8c0 14-10 24-24 24h-6v-30h-10c-22 0-38-14-38-34s16-34 38-34h18v40h26z'/%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="../">
+        <span class="brand-mark">L</span>
+        <span>Lau<small>AI AGENT ENGINEER</small></span>
+      </a>
+      <nav class="nav">
+        <a href="../#projects">项目</a>
+        <a href="../#opensource">开源</a>
+        <a href="../#blog">博客</a>
+        <a href="https://github.com/lau0708" target="_blank" rel="noopener">GitHub ↗</a>
+        <button class="theme-btn" id="theme-toggle" type="button" aria-label="切换主题">🌓</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="post">
+    <a class="back" href="../#blog">← 返回博客</a>
+    <header>
+      <h1>报告会撒谎：用两层评测拦截 Agent 的幻觉</h1>
+      <p class="post-meta">Lau · 2026-11-15 · <a href="https://github.com/lau0708/cross-border-crm" target="_blank" rel="noopener">cross-border-crm</a> 设计复盘</p>
+    </header>
+    <article>
+      <p>在 <a href="https://github.com/lau0708/cross-border-crm" target="_blank" rel="noopener">cross-border-crm</a> 里，我们遇到一个反直觉的问题：<strong>即使报告的每条引用都指向真实记录，结论仍然可能写错</strong>——比如把「在谈」写成「已成交」。这不是数据错了，是推理错了。</p>
+
+      <h2>第一层：结构断言</h2>
+      <p>先核对成功工具观察里的<strong>来源标识与结构化字段</strong>。报告的每个结论，都必须能追溯到某个工具返回的具体字段；对不上的，先标记。</p>
+
+      <h2>第二层：独立语义 Judge</h2>
+      <p>结构对，语义未必对。所以再跑一个<strong>独立的语义 Judge</strong>，判断「在谈」和「已成交」这种状态差异是否被正确表达。两层取<strong>更严格</strong>的一层合并结论。</p>
+
+      <h2>三类问题分开治</h2>
+      <ul>
+        <li><strong>引用未观察</strong>——结论引用了根本没返回的数据，这是幻觉。</li>
+        <li><strong>字段矛盾</strong>——结论与返回字段冲突，这是对不齐。</li>
+        <li><strong>语义待复核</strong>——字段对、语义存疑，需要人工或更强判断。</li>
+      </ul>
+
+      <h2>评测本身也要防漂移</h2>
+      <p>已存评价必须匹配<strong>运行材料、评测规范、模型版本</strong>——资料变化后不能沿用旧高分，否则评测结果本身也会漂移，变成用旧答案给新错误背书。失败样本进回归集，修一次、验一次、留一条。</p>    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="row">
+        <a href="mailto:lau0708@qq.com">lau0708@qq.com</a>
+        <a href="https://github.com/lau0708" target="_blank" rel="noopener">github.com/lau0708</a>
+        <a href="../">返回首页</a>
+      </div>
+    </div>
+  </footer>
+  <script src="../script.js"></script>
+</body>
+</html>
