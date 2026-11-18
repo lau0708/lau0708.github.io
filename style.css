@@ -421,3 +421,7 @@ img { max-width: 100%; }
 .oss-badge.merged { background: #2f9e63; }
 .oss-badge.open { background: var(--purple); }
 .oss-badge.closed { background: #8a7d85; }
+
+/* ===== Live PR stats ===== */
+.pulse-cell em { font-style: normal; color: var(--pink); font-weight: 700; }
+.hero-chip b { font-weight: 700; }
