@@ -5,15 +5,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>怎么给 83k star 的开源项目提 3 个 PR · Lau</title>
   <meta name="description" content="没有抢 issue、没有先问维护者，给 bytedance/deer-flow 提的 3 个 PR 全部合并。复盘一条可复用的启发式：测试不对称就是 bug 定位器。" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 216 216'%3E%3Crect width='216' height='216' rx='46' fill='%23171513'/%3E%3Cpath fill='%23d79376' d='M78 68v-8c0-14 10-24 24-24h6v30h10c22 0 38-14 38-34s-16-34-38-34h-18v40h-26v-8c0-14-10-24-24-24h-6v30h-10C12 36 6 50 6 70s6 34 34 34h18V64h26v8c0 14 10 24 24 24h6V66h10c22 0 38 14 38 34s-16 34-38 34h-18v-40h-26v8c0 14-10 24-24 24h-6v-30h-10c-22 0-38-14-38-34s16-34 38-34h18v40h26z'/%3E%3C/svg%3E" />
   <link rel="stylesheet" href="../style.css" />
 </head>
 <body>
-  <header class="topbar">
-    <div class="wrap topbar-inner">
-      <a class="brand" href="../">Lau · AI Agent</a>
-      <nav class="topbar-links">
-        <a href="../">首页</a>
-        <a href="https://github.com/lau0708" target="_blank" rel="noopener">GitHub</a>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="../">
+        <span class="brand-mark">L</span>
+        <span>Lau<small>AI AGENT ENGINEER</small></span>
+      </a>
+      <nav class="nav">
+        <a href="../#projects">项目</a>
+        <a href="../#opensource">开源</a>
+        <a href="../#blog">博客</a>
+        <a href="https://github.com/lau0708" target="_blank" rel="noopener">GitHub ↗</a>
         <button class="theme-btn" id="theme-toggle" type="button" aria-label="切换主题">🌓</button>
       </nav>
     </div>
@@ -39,7 +45,7 @@
       <p>我换了一条路：<strong>直接读代码，找「文档说了什么」和「实现做了什么」之间的裂缝</strong>。这类 bug 不需要领域判断，只需要耐心对照，而且维护者很难拒绝——因为它违背的是仓库自己写下的契约。</p>
 
       <h2>一条可复用的启发式</h2>
-      <blockquote>测试不对称就是 bug 定位器。</blockquote>
+      <blockquote><p>测试不对称就是 bug 定位器。</p></blockquote>
       <p>同一个接口往往有多个实现。如果只有其中一个实现为某个不变量写了回归测试，那么<strong>没被测到的那个「兄弟实现」，大概率就是 bug 所在</strong>。测试写在哪里，就说明作者当时在哪里踩过坑、在哪里没踩过。</p>
       <p>反过来，这也是一个非常实用的阅读大型代码库的方法：先找测试，测试是作者留下的意图说明书；再找没被测试覆盖的平行实现，那里藏着不一致。</p>
 
@@ -49,9 +55,13 @@
     </article>
   </main>
 
-  <footer class="footer">
+  <footer class="site-footer">
     <div class="wrap">
-      <p><a href="mailto:lau0708@qq.com">lau0708@qq.com</a> · <a href="https://github.com/lau0708" target="_blank" rel="noopener">github.com/lau0708</a></p>
+      <div class="row">
+        <a href="mailto:lau0708@qq.com">lau0708@qq.com</a>
+        <a href="https://github.com/lau0708" target="_blank" rel="noopener">github.com/lau0708</a>
+        <a href="../">返回首页</a>
+      </div>
     </div>
   </footer>
   <script src="../script.js"></script>

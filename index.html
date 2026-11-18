@@ -5,17 +5,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Lau · AI Agent / LLM 应用工程师</title>
   <meta name="description" content="刘悦（Lau）—— AI Agent / LLM 应用工程师。关注 Agent 的记忆可信、动作受控与可评测性。开源贡献、项目展示与博客。" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 216 216'%3E%3Crect width='216' height='216' rx='46' fill='%23171513'/%3E%3Cpath fill='%23d79376' d='M78 68v-8c0-14 10-24 24-24h6v30h10c22 0 38-14 38-34s-16-34-38-34h-18v40h-26v-8c0-14-10-24-24-24h-6v30h-10C12 36 6 50 6 70s6 34 34 34h18V64h26v8c0 14 10 24 24 24h6V66h10c22 0 38 14 38 34s-16 34-38 34h-18v-40h-26v8c0 14-10 24-24 24h-6v-30h-10c-22 0-38-14-38-34s16-34 38-34h18v40h26z'/%3E%3C/svg%3E" />
   <link rel="stylesheet" href="./style.css" />
 </head>
 <body>
-  <header class="topbar">
-    <div class="wrap topbar-inner">
-      <a class="brand" href="./">Lau · AI Agent</a>
-      <nav class="topbar-links">
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="./">
+        <span class="brand-mark">L</span>
+        <span>Lau<small>AI AGENT ENGINEER</small></span>
+      </a>
+      <nav class="nav">
         <a href="#projects">项目</a>
         <a href="#opensource">开源</a>
         <a href="#blog">博客</a>
-        <a href="https://github.com/lau0708" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://github.com/lau0708" target="_blank" rel="noopener">GitHub ↗</a>
         <button class="theme-btn" id="theme-toggle" type="button" aria-label="切换主题">🌓</button>
       </nav>
     </div>
@@ -23,8 +27,9 @@
 
   <section class="hero">
     <div class="wrap">
+      <p class="eyebrow">AI AGENT / LLM 应用工程师 · 可立即到岗</p>
       <h1>刘悦 · Lau</h1>
-      <p class="role">AI Agent / LLM 应用工程师</p>
+      <p class="role">把 Agent 的记忆可信、动作受控与可评测性，做成工程，而不是口号</p>
       <p class="lead">
         做 Agent 系统，能跑通只是起点。我把更多时间花在三个问题上：
         <strong>它记住的东西是不是真的</strong>、<strong>它动手之前谁说了算</strong>、
@@ -35,19 +40,17 @@
         <a class="btn" href="mailto:lau0708@qq.com">lau0708@qq.com</a>
         <a class="btn" href="#blog">读博客</a>
       </div>
-      <div class="oss-badge">
-        ⭐ 3 个 PR 已合入 bytedance/deer-flow（83k★，LangGraph Agent 框架）
-      </div>
+      <div class="oss-badge">⭐ 3 个 PR 已合入 bytedance/deer-flow（83k★，LangGraph Agent 框架）</div>
     </div>
   </section>
 
   <section class="section" id="projects">
     <div class="wrap">
-      <div class="section-head">
-        <h2>项目</h2>
-        <span class="sub">都能在 GitHub 上点开、跑通、复核</span>
+      <div class="pagehead">
+        <p class="eyebrow">PROJECTS</p>
+        <h2>项目 · 都能在 GitHub 上点开、跑通、复核</h2>
+        <p class="subtitle">简历上的个人项目在这里都有一份完整展示：是什么、解决了什么真实问题、用什么技术、怎么做取舍。</p>
       </div>
-      <p class="desc">简历上的个人项目在这里都有一份完整展示：是什么、解决了什么真实问题、用什么技术、怎么做取舍。</p>
 
       <div class="grid">
         <article class="card">
@@ -104,18 +107,18 @@
 
   <section class="section" id="opensource">
     <div class="wrap">
-      <div class="section-head">
-        <h2>开源贡献</h2>
-        <span class="sub">bytedance/deer-flow · 83k★</span>
+      <div class="pagehead">
+        <p class="eyebrow">OPEN SOURCE</p>
+        <h2>开源贡献 · bytedance/deer-flow（83k★）</h2>
+        <p class="subtitle">三个都是自己挖出来的 bug——没抢 issue、没先问维护者，diff 都很小，修的却是仓库文档里写明、而某个实现悄悄违反的契约。</p>
       </div>
-      <p class="desc">三个都是自己挖出来的 bug——没抢 issue、没先问维护者，diff 都很小，修的却是仓库文档里写明、而某个实现悄悄违反的契约。</p>
 
       <div class="pr-row">
         <div class="pr-num">#5998</div>
         <div class="pr-body">
           <h3><a href="https://github.com/bytedance/deer-flow/pull/5998" target="_blank" rel="noopener">fix(channels): grant sandbox read bits to Feishu/DingTalk inbound uploads</a></h3>
           <p>为飞书 / 钉钉入站附件补上沙箱读权限位，让文档里承诺的附件读取在实际实现中真正成立。</p>
-          <div class="meta">已合并 · 2026-09-28</div>
+          <div class="meta">已合并 · 2026-09-28 · <a href="https://github.com/bytedance/deer-flow/pull/5998" target="_blank" rel="noopener">查看 PR ↗</a></div>
         </div>
       </div>
 
@@ -124,7 +127,7 @@
         <div class="pr-body">
           <h3><a href="https://github.com/bytedance/deer-flow/pull/5703" target="_blank" rel="noopener">fix(skills): resolve the user-scoped install content scan from its own config</a></h3>
           <p>用户级安装的内容扫描改从自身配置解析，修掉配置来源不一致导致的扫描失效。</p>
-          <div class="meta">已合并 · 2026-09-22</div>
+          <div class="meta">已合并 · 2026-09-22 · <a href="https://github.com/bytedance/deer-flow/pull/5703" target="_blank" rel="noopener">查看 PR ↗</a></div>
         </div>
       </div>
 
@@ -133,7 +136,7 @@
         <div class="pr-body">
           <h3><a href="https://github.com/bytedance/deer-flow/pull/5663" target="_blank" rel="noopener">fix(runtime): share one change position across an atomic thread operation</a></h3>
           <p>让原子线程操作共享同一个变更位置，消除并发写入时的不一致。</p>
-          <div class="meta">已合并 · 2026-09-22</div>
+          <div class="meta">已合并 · 2026-09-22 · <a href="https://github.com/bytedance/deer-flow/pull/5663" target="_blank" rel="noopener">查看 PR ↗</a></div>
         </div>
       </div>
     </div>
@@ -141,9 +144,9 @@
 
   <section class="section" id="work">
     <div class="wrap">
-      <div class="section-head">
-        <h2>工作经历</h2>
-        <span class="sub">风越科技 · 2026.01 – 至今</span>
+      <div class="pagehead">
+        <p class="eyebrow">EXPERIENCE</p>
+        <h2>工作经历 · 风越科技（2026.01 – 至今）</h2>
       </div>
       <div class="work">
         <h3>面向跨境电商的 Agent 运行时平台 · AI 应用开发工程师</h3>
@@ -155,9 +158,9 @@
 
   <section class="section" id="blog">
     <div class="wrap">
-      <div class="section-head">
-        <h2>博客</h2>
-        <span class="sub">把项目里真正难的地方写出来</span>
+      <div class="pagehead">
+        <p class="eyebrow">BLOG</p>
+        <h2>博客 · 把项目里真正难的地方写出来</h2>
       </div>
 
       <div class="pr-row">
@@ -186,14 +189,18 @@
     </div>
   </section>
 
-  <footer class="footer">
+  <footer class="site-footer">
     <div class="wrap">
-      <p>
-        刘悦 · Lau — 正在找 AI Agent / LLM 应用工程师的机会。
-        <a href="mailto:lau0708@qq.com">lau0708@qq.com</a> ·
+      <a class="brand" href="./">
+        <span class="brand-mark">L</span>
+        <span>Lau<small>AI AGENT ENGINEER</small></span>
+      </a>
+      <p>刘悦 · Lau — 正在找 AI Agent / LLM 应用工程师的机会。</p>
+      <div class="row">
+        <a href="mailto:lau0708@qq.com">lau0708@qq.com</a>
         <a href="https://github.com/lau0708" target="_blank" rel="noopener">github.com/lau0708</a>
-      </p>
-      <p>本站托管于 GitHub Pages，可免费、长期访问。</p>
+        <span>本站托管于 GitHub Pages · 免费 · 长期可访问</span>
+      </div>
     </div>
   </footer>
 
