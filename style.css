@@ -414,3 +414,10 @@ img { max-width: 100%; }
   .tl-date b { font-size: 1.4rem; }
   .archive-hero { padding-top: 64px; }
 }
+
+/* ===== Open source groups ===== */
+.oss-group-title { margin: 32px 0 2px; font-family: var(--font-display-en); font-size: .76rem; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+.oss-badge { display: inline-block; padding: 6px 14px; border-radius: 999px; font-weight: 700; color: #fff; font-size: .78rem; letter-spacing: .04em; }
+.oss-badge.merged { background: #2f9e63; }
+.oss-badge.open { background: var(--purple); }
+.oss-badge.closed { background: #8a7d85; }

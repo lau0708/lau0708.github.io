@@ -49,7 +49,7 @@
           <figure class="hero-avatar">
             <img src="./avatar.jpg" alt="刘悦 Lau 的 GitHub 头像" />
           </figure>
-          <span class="hero-chip chip-rose">5 PR merged</span>
+          <span class="hero-chip chip-rose">13 PR · 5 merged</span>
           <span class="hero-chip chip-purple">10 篇深度博客</span>
           <span class="hero-chip chip-yellow">12,958 项单测</span>
         </div>
@@ -229,39 +229,121 @@
       <div class="wrap">
         <header class="pagehead">
           <p class="kicker">OPEN SOURCE</p>
-          <h2>开源贡献 · bytedance/deer-flow（83k★）</h2>
-          <p class="subtitle">三个都是自己挖出来的 bug——没抢 issue、没先问维护者，diff 都很小，修的却是仓库文档里写明、而某个实现悄悄违反的契约。</p>
+          <h2>开源贡献 · 13 个 PR，5 个已合并</h2>
+          <p class="subtitle">覆盖 poetry、mypy、scikit-learn、deer-flow 等 8 个仓库，都是自己挖的真实问题；合并的能复核，进行中的能追踪，关闭的也如实标注。</p>
         </header>
 
+        <h3 class="oss-group-title"><span class="oss-badge merged">已合并 · 5</span></h3>
         <div class="pr-row">
-          <div class="pr-num">#5998</div>
+          <div class="pr-num">deer-flow #5998</div>
           <div class="pr-body">
             <h3><a href="https://github.com/bytedance/deer-flow/pull/5998" target="_blank" rel="noopener">fix(channels): grant sandbox read bits to Feishu/DingTalk inbound uploads</a></h3>
-            <p>为飞书 / 钉钉入站附件补上沙箱读权限位，让文档里承诺的附件读取在实际实现中真正成立。</p>
+            <p>为飞书 / 钉钉入站附件补上沙箱读权限位，让文档承诺的附件读取在实现里真正成立。</p>
             <div class="meta">已合并 · 2026-09-28 · <a href="https://github.com/bytedance/deer-flow/pull/5998" target="_blank" rel="noopener">查看 PR ↗</a></div>
           </div>
         </div>
-
         <div class="pr-row">
-          <div class="pr-num">#5703</div>
+          <div class="pr-num">deer-flow #5703</div>
           <div class="pr-body">
             <h3><a href="https://github.com/bytedance/deer-flow/pull/5703" target="_blank" rel="noopener">fix(skills): resolve the user-scoped install content scan from its own config</a></h3>
             <p>用户级安装的内容扫描改从自身配置解析，修掉配置来源不一致导致的扫描失效。</p>
             <div class="meta">已合并 · 2026-09-22 · <a href="https://github.com/bytedance/deer-flow/pull/5703" target="_blank" rel="noopener">查看 PR ↗</a></div>
           </div>
         </div>
-
         <div class="pr-row">
-          <div class="pr-num">#5663</div>
+          <div class="pr-num">deer-flow #5663</div>
           <div class="pr-body">
             <h3><a href="https://github.com/bytedance/deer-flow/pull/5663" target="_blank" rel="noopener">fix(runtime): share one change position across an atomic thread operation</a></h3>
-            <p>让原子线程操作共享同一个变更位置，消除并发写入时的不一致。</p>
+            <p>原子线程操作共享同一变更位置，消除并发写入时的不一致。</p>
             <div class="meta">已合并 · 2026-09-22 · <a href="https://github.com/bytedance/deer-flow/pull/5663" target="_blank" rel="noopener">查看 PR ↗</a></div>
+          </div>
+        </div>
+        <div class="pr-row">
+          <div class="pr-num">ArcReel #2573</div>
+          <div class="pr-body">
+            <h3><a href="https://github.com/ArcReel/ArcReel/pull/2573" target="_blank" rel="noopener">fix(config): 无参考图单元的时长档位改用 i2v 桶模型解析</a></h3>
+            <p>修掉 config 里无参考图单元时长档位的解析错误。</p>
+            <div class="meta">已合并 · 2026-09-23 · <a href="https://github.com/ArcReel/ArcReel/pull/2573" target="_blank" rel="noopener">查看 PR ↗</a></div>
+          </div>
+        </div>
+        <div class="pr-row">
+          <div class="pr-num">BossHunter #221</div>
+          <div class="pr-body">
+            <h3><a href="https://github.com/shengjidaguai-china/BossHunter/pull/221" target="_blank" rel="noopener">feat(web): 支持深色模式与浅色/深色/跟随系统主题切换</a></h3>
+            <p>为 Web 端补齐深色 / 浅色 / 跟随系统三态主题切换。</p>
+            <div class="meta">已合并 · 2026-09-19 · <a href="https://github.com/shengjidaguai-china/BossHunter/pull/221" target="_blank" rel="noopener">查看 PR ↗</a></div>
+          </div>
+        </div>
+
+        <h3 class="oss-group-title"><span class="oss-badge open">进行中 · 6</span></h3>
+        <div class="pr-row">
+          <div class="pr-num">poetry #11237</div>
+          <div class="pr-body">
+            <h3><a href="https://github.com/python-poetry/poetry/pull/11237" target="_blank" rel="noopener">fix(remove): clean up dangling extras references after removing a dependency from main</a></h3>
+            <p>移除依赖后清理残留的 extras 引用，避免悬空配置。</p>
+            <div class="meta">进行中 · Open · <a href="https://github.com/python-poetry/poetry/pull/11237" target="_blank" rel="noopener">查看 PR ↗</a></div>
+          </div>
+        </div>
+        <div class="pr-row">
+          <div class="pr-num">poetry #11233</div>
+          <div class="pr-body">
+            <h3><a href="https://github.com/python-poetry/poetry/pull/11233" target="_blank" rel="noopener">fix(remove): only clean up groups whose dependencies were actually removed</a></h3>
+            <p>只清理真正被移除的 group 依赖，避免误删无关项。</p>
+            <div class="meta">进行中 · Open · <a href="https://github.com/python-poetry/poetry/pull/11233" target="_blank" rel="noopener">查看 PR ↗</a></div>
+          </div>
+        </div>
+        <div class="pr-row">
+          <div class="pr-num">poetry #11230</div>
+          <div class="pr-body">
+            <h3><a href="https://github.com/python-poetry/poetry/pull/11230" target="_blank" rel="noopener">fix(remove): match legacy include-groups by normalized name</a></h3>
+            <p>legacy include-groups 按规范化名称匹配，修复别名不一致。</p>
+            <div class="meta">进行中 · Open · <a href="https://github.com/python-poetry/poetry/pull/11230" target="_blank" rel="noopener">查看 PR ↗</a></div>
+          </div>
+        </div>
+        <div class="pr-row">
+          <div class="pr-num">mypy #22461</div>
+          <div class="pr-body">
+            <h3><a href="https://github.com/python/mypy/pull/22461" target="_blank" rel="noopener">Fix callback protocol assignability when trivial *args/**kwargs pair has retained parameters</a></h3>
+            <p>修复平凡 *args/**kwargs 组合下回调协议的可赋值性判断。</p>
+            <div class="meta">进行中 · Open · <a href="https://github.com/python/mypy/pull/22461" target="_blank" rel="noopener">查看 PR ↗</a></div>
+          </div>
+        </div>
+        <div class="pr-row">
+          <div class="pr-num">scikit-learn #35350</div>
+          <div class="pr-body">
+            <h3><a href="https://github.com/scikit-learn/scikit-learn/pull/35350" target="_blank" rel="noopener">FIX return self from partial_fit of MultiOutputRegressor and BernoulliRBM</a></h3>
+            <p>partial_fit 返回 self，保持 estimator 的 API 契约一致。</p>
+            <div class="meta">进行中 · Open · <a href="https://github.com/scikit-learn/scikit-learn/pull/35350" target="_blank" rel="noopener">查看 PR ↗</a></div>
+          </div>
+        </div>
+        <div class="pr-row">
+          <div class="pr-num">craft-agents-oss #1063</div>
+          <div class="pr-body">
+            <h3><a href="https://github.com/craft-ai-agents/craft-agents-oss/pull/1063" target="_blank" rel="noopener">fix(interceptor): bound the debug log and omit request bodies</a></h3>
+            <p>给拦截器 debug 日志加边界、省略请求体，避免日志膨胀。</p>
+            <div class="meta">进行中 · Open · <a href="https://github.com/craft-ai-agents/craft-agents-oss/pull/1063" target="_blank" rel="noopener">查看 PR ↗</a></div>
+          </div>
+        </div>
+
+        <h3 class="oss-group-title"><span class="oss-badge closed">已关闭（未合并）· 2</span></h3>
+        <div class="pr-row">
+          <div class="pr-num">scikit-learn #35326</div>
+          <div class="pr-body">
+            <h3><a href="https://github.com/scikit-learn/scikit-learn/pull/35326" target="_blank" rel="noopener">FIX raise NotFittedError in KernelPCA.inverse_transform when unfitted</a></h3>
+            <p>未 fit 时抛 NotFittedError（已关闭，未合并）。</p>
+            <div class="meta">已关闭 · 未合并 · <a href="https://github.com/scikit-learn/scikit-learn/pull/35326" target="_blank" rel="noopener">查看 PR ↗</a></div>
+          </div>
+        </div>
+        <div class="pr-row">
+          <div class="pr-num">hermes-agent #115086</div>
+          <div class="pr-body">
+            <h3><a href="https://github.com/NousResearch/hermes-agent/pull/115086" target="_blank" rel="noopener">fix(utils): fsync the resolved target directory for atomic writes</a></h3>
+            <p>原子写入后 fsync 目标目录（已关闭，未合并）。</p>
+            <div class="meta">已关闭 · 未合并 · <a href="https://github.com/NousResearch/hermes-agent/pull/115086" target="_blank" rel="noopener">查看 PR ↗</a></div>
           </div>
         </div>
       </div>
     </section>
-
     <section class="section section-alt" id="work">
       <div class="wrap">
         <header class="pagehead">
@@ -285,7 +367,7 @@
         </header>
         <div class="pulse-grid">
           <div class="pulse-cell"><b>4</b><span>展示项目</span></div>
-          <div class="pulse-cell"><b>5</b><span>已合并 PR</span></div>
+          <div class="pulse-cell"><b>13</b><span>PR 提交 · 5 合并</span></div>
           <div class="pulse-cell"><b>10</b><span>深度博客</span></div>
           <div class="pulse-cell"><b>12,958</b><span>单测 · 127 回归</span></div>
           <div class="pulse-cell"><b>83k★</b><span>目标仓库</span></div>
