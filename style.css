@@ -239,3 +239,38 @@ html[data-theme="dark"] .oss-badge,
   .nav a { padding: 7px 9px; font-size: .82rem; }
   .post { padding: 36px 18px 48px; }
 }
+
+/* ===== Blog figures: tables & diagrams ===== */
+.post article table {
+  width: 100%; border-collapse: collapse; margin: 0 0 18px;
+  font-size: .875rem; line-height: 1.5;
+}
+.post article th, .post article td {
+  border: 1px solid var(--border); padding: 9px 12px;
+  text-align: left; vertical-align: top;
+}
+.post article th { background: var(--elevated); font-weight: 600; }
+.post article td code, .post article th code { font-size: .82em; }
+
+.dwrap {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius-lg); padding: 18px; margin: 22px 0;
+  box-shadow: var(--shadow-card); overflow-x: auto;
+}
+.dwrap .cap { font-size: .78rem; color: var(--muted); margin-bottom: 12px; }
+.dwrap svg { display: block; width: 100%; height: auto; min-width: 460px; }
+
+.dnode { fill: var(--surface); stroke: var(--border); stroke-width: 1.2; }
+.dnode-fill { fill: var(--accent-soft); stroke: var(--accent); stroke-width: 1.2; }
+.dnode-clay { fill: var(--clay-soft); stroke: var(--clay); stroke-width: 1.2; }
+.dnode-ink { fill: #171513; stroke: #302b25; stroke-width: 1.2; }
+.dtitle { fill: var(--text); font-size: 13px; font-weight: 600; font-family: inherit; }
+.dsub { fill: var(--muted); font-size: 11px; font-family: inherit; }
+.dlabel { fill: var(--muted); font-size: 11px; font-family: inherit; }
+.dline { stroke: var(--muted); stroke-width: 1.3; fill: none; }
+.dline-a { stroke: var(--accent); stroke-width: 1.4; fill: none; }
+.dhead { fill: var(--clay); }
+.dbody { fill: var(--muted); }
+.arrow { fill: var(--muted); }
+.arrow-a { fill: var(--accent); }
+.dline-dash { stroke: var(--muted); stroke-width: 1.2; fill: none; stroke-dasharray: 5 5; }

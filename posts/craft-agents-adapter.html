@@ -34,7 +34,9 @@
     <article>
       <p>跨境电商的经营决策，第一步就卡在数据上：库存、广告、订单、客服工单，分散在多个后台系统里，<strong>口径不一致、时点不一致</strong>。Agent 要在这些系统之间自主完成「发现异常 → 定位根因 → 决策 → 执行」，如果每一步都按各后台自己的接口去写，主流程会被耦合成一团乱麻。</p>
 
-      <h2>一、问题不在接口多，在于没有统一的工具契约</h2>
+      <div class="dwrap"><div class="cap">统一数据接入：把异构后台收敛成一套标准工具调用，Agent 主流程不感知差异</div><svg viewBox="0 0 560 440" role="img" aria-label="数据接入流程"><rect x="130" y="20" width="300" height="52" rx="8" class="dnode-clay"/><text x="280" y="45" text-anchor="middle" class="dtitle">异构后台系统</text><text x="280" y="64" text-anchor="middle" class="dsub">库存 · 广告 · 订单 · 客服工单</text><rect x="130" y="104" width="300" height="52" rx="8" class="dnode"/><text x="280" y="129" text-anchor="middle" class="dtitle">MCP 接口 · HTTP API</text><text x="280" y="148" text-anchor="middle" class="dsub">各自的分页 / 鉴权 / 错误码 / 时间口径</text><rect x="130" y="188" width="300" height="52" rx="8" class="dnode-fill"/><text x="280" y="213" text-anchor="middle" class="dtitle">统一数据源 Adapter</text><text x="280" y="232" text-anchor="middle" class="dsub">基于 ServerBuilder 统一接入框架</text><rect x="130" y="272" width="300" height="52" rx="8" class="dnode"/><text x="280" y="297" text-anchor="middle" class="dtitle">标准工具调用契约</text><text x="280" y="316" text-anchor="middle" class="dsub">统一参数 · 返回结构 · 错误语义</text><rect x="130" y="356" width="300" height="52" rx="8" class="dnode"/><text x="280" y="381" text-anchor="middle" class="dtitle">Agent 主流程</text><text x="280" y="400" text-anchor="middle" class="dsub">面向标准契约 · 新数据源接入不改动</text><line x1="280" y1="72" x2="280" y2="95" class="dline"/><polygon points="275,95 285,95 280,104" class="arrow"/><line x1="280" y1="156" x2="280" y2="179" class="dline"/><polygon points="275,179 285,179 280,188" class="arrow"/><line x1="280" y1="240" x2="280" y2="263" class="dline"/><polygon points="275,263 285,263 280,272" class="arrow"/><line x1="280" y1="324" x2="280" y2="347" class="dline"/><polygon points="275,347 285,347 280,356" class="arrow"/></svg></div>
+
+<h2>一、问题不在接口多，在于没有统一的工具契约</h2>
       <p>异构后台有两种典型形态：已经 MCP 化的，和只有 HTTP API 的。它们的分页方式、鉴权方式、错误码、时间口径都不一样。Agent 主流程一旦直接感知这些差异，每接一个系统就要改一次主流程，平台就退化成了「一个后台写一套流程」。</p>
 
       <h2>二、Adapter 收敛，主流程面向标准契约</h2>

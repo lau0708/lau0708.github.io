@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>PulseOps 复盘——设备工单 Agent，为什么终点是「关单」而不是「看见异常」 · Lau</title>
-  <meta name="description" content="面向离散制造的设备工单闭环 Agent：确定性骨架 + 两个 LLM 节点，幂等落在部分唯一索引，状态机只认数据库，关单即沉淀经验。" />
+  <meta name="description" content="面向离散制造的设备工单闭环 Agent：确定性骨架 + 两个 LLM 节点，幂等落在部分唯一索引，状态机只认数据库，关单即沉淀经验，127 项回归。" />
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 216 216'%3E%3Crect width='216' height='216' rx='46' fill='%23171513'/%3E%3Cpath fill='%23d79376' d='M78 68v-8c0-14 10-24 24-24h6v30h10c22 0 38-14 38-34s-16-34-38-34h-18v40h-26v-8c0-14-10-24-24-24h-6v30h-10C12 36 6 50 6 70s6 34 34 34h18V64h26v8c0 14 10 24 24 24h6V66h10c22 0 38 14 38 34s-16 34-38 34h-18v-40h-26v8c0 14-10 24-24 24h-6v-30h-10c-22 0-38-14-38-34s16-34 38-34h18v40h26z'/%3E%3C/svg%3E" />
   <link rel="stylesheet" href="../style.css" />
 </head>
@@ -32,28 +32,25 @@
       <p class="post-meta">Lau · 2026-11-11 · <a href="https://github.com/lau0708/pulseops" target="_blank" rel="noopener">github.com/lau0708/pulseops</a></p>
     </header>
     <article>
-      <p>仓库：<a href="https://github.com/lau0708/pulseops" target="_blank" rel="noopener">lau0708/pulseops</a> · Node 20 / React 19 / Python · TypeScript</p>
+      <p>仓库：<a href="https://github.com/lau0708/pulseops" target="_blank" rel="noopener">lau0708/pulseops</a> · Node 20 / React 19 / Python · TypeScript · 飞书卡片</p>
       <p>一句话：从「巡检发现异常」到「这张单被谁、在什么时候、用什么办法关掉」的可审计闭环。</p>
 
       <h2>一、背景：没人盯得住 24 小时的曲线</h2>
-      <p>一条产线 4 台设备，值班的是班组长和 2 个维修工。异常通常在「已经停机之后」才被发现，工单靠口头传，处置结果留在师傅脑子里。</p>
-      <p>市面上很多「设备大屏」的终点是看见异常：曲线、告警、标红，很热闹。但看见之后呢？谁去处理、处理结果记在哪、下次同类故障能不能直接查到——这些才是真正决定价值的部分。所以 PulseOps 的定位是<strong>把后半截做成闭环</strong>，而不是再做一块更漂亮的大屏。</p>
+      <p>一条产线 4 台设备，值班的是班组长和 2 个维修工。异常通常在「已经停机之后」才被发现，工单靠口头传，处置结果留在师傅脑子里。很多「设备大屏」的终点是看见异常，很热闹；但看见之后呢？谁去处理、结果记在哪、下次同类故障能不能直接查到——这些才是真正决定价值的部分。</p>
+      <p>所以 PulseOps 的定位是<strong>把后半截做成闭环</strong>，而不是再做一块更漂亮的大屏。三个入口收敛到同一条链路：定时巡检（主线）、人工问诊（「3 号机振动不对」）、班次简报（收班时汇总这一班有没有留坑）。</p>
+
+<div class="dwrap"><div class="cap">PulseOps 闭环：从异常到沉淀的完整链路（箭头表示状态流转，虚线为知识回流）</div><svg viewBox="0 0 620 650" role="img" aria-label="PulseOps 闭环流程"><rect x="150" y="20" width="340" height="54" rx="8" class="dnode-clay"/><text x="320" y="45" text-anchor="middle" class="dtitle">① 双触发</text><text x="320" y="64" text-anchor="middle" class="dsub">定时巡检 · 人工问诊</text><rect x="150" y="112" width="340" height="54" rx="8" class="dnode"/><text x="320" y="137" text-anchor="middle" class="dtitle">② 判异 + 幂等去重</text><text x="320" y="156" text-anchor="middle" class="dsub">确定性代码 · 同设备未闭环即跳过</text><rect x="150" y="204" width="340" height="54" rx="8" class="dnode-fill"/><text x="320" y="229" text-anchor="middle" class="dtitle">③ LLM 诊断（可降级）</text><text x="320" y="248" text-anchor="middle" class="dsub">事实包进 · 强制 JSON 出 · 降级关键词命中</text><rect x="150" y="296" width="340" height="54" rx="8" class="dnode"/><text x="320" y="321" text-anchor="middle" class="dtitle">④ 幂等建单</text><text x="320" y="340" text-anchor="middle" class="dsub">状态 open · DB 部分唯一索引兜底</text><rect x="150" y="388" width="340" height="54" rx="8" class="dnode"/><text x="320" y="413" text-anchor="middle" class="dtitle">⑤ 飞书卡片处置</text><text x="320" y="432" text-anchor="middle" class="dsub">接单 → 已处理 → 确认闭环 · 就地重绘</text><rect x="150" y="480" width="340" height="54" rx="8" class="dnode"/><text x="320" y="505" text-anchor="middle" class="dtitle">⑥ 关单沉淀经验</text><text x="320" y="524" text-anchor="middle" class="dsub">source_wo_id 幂等 · 失败不阻断关单</text><rect x="150" y="572" width="340" height="54" rx="8" class="dnode-fill"/><text x="320" y="597" text-anchor="middle" class="dtitle">⑦ 故障知识库</text><text x="320" y="616" text-anchor="middle" class="dsub">症状/根因/处置/溯源 · 可检索</text><line x1="320" y1="74" x2="320" y2="103" class="dline"/><polygon points="315,103 325,103 320,112" class="arrow"/><line x1="320" y1="166" x2="320" y2="195" class="dline"/><polygon points="315,195 325,195 320,204" class="arrow"/><line x1="320" y1="258" x2="320" y2="287" class="dline"/><polygon points="315,287 325,287 320,296" class="arrow"/><line x1="320" y1="350" x2="320" y2="379" class="dline"/><polygon points="315,379 325,379 320,388" class="arrow"/><line x1="320" y1="442" x2="320" y2="471" class="dline"/><polygon points="315,471 325,471 320,480" class="arrow"/><line x1="320" y1="534" x2="320" y2="563" class="dline"/><polygon points="315,563 325,563 320,572" class="arrow"/><line x1="92" y1="231" x2="92" y2="599" class="dline-dash"/><line x1="92" y1="231" x2="141" y2="231" class="dline-dash"/><polygon points="141,226 141,236 150,231" class="arrow"/><text transform="rotate(-90 72 415)" x="72" y="415" text-anchor="middle" class="dlabel">历史故障 + 知识命中 → 诊断事实包</text></svg></div>
 
       <h2>二、确定性骨架 + 两个 LLM 节点，而不是「全交给模型」</h2>
-      <p>链路里每一环的性质不同，分层切得很硬：</p>
-      <ul>
-        <li><strong>可穷举的部分</strong>——巡检、阈值判异、幂等去重、状态流转、推送、沉淀、留痕，全部用普通代码。</li>
-        <li><strong>不可穷举的部分</strong>——根因假设与处置方案、自然语言问诊解析，只有这两个点交给 LLM。</li>
-      </ul>
-      <p>收益很直接：<strong>模型只做判断，不碰写操作</strong>。建单、改状态、推送都由代码执行，模型吐出的每个数字都能在 <code>mes.db</code> 里对账；模型挂了、key 失效、返回坏 JSON（重试 1 次后）都会降级为知识库关键词命中，巡检循环不中断。</p>
+      <p>链路里每一环的性质不同，分层切得很硬：巡检、阈值判异、幂等去重、状态流转、推送、沉淀、留痕，全部用普通代码；只有「根因假设与处置方案」「自然语言问诊解析」这两个不可穷举的点交给 LLM。</p>
+      <p>收益很直接：<strong>模型只做判断，不碰写操作</strong>。建单、改状态、推送都由代码执行，模型吐出的每个数字都能在 <code>mes.db</code> 里对账；模型挂了、key 失效、返回坏 JSON（重试 1 次后）都降级为知识库关键词命中，巡检循环不中断。</p>
       <p>同一条告警，LLM 模式与降级模式的实测差异，正好说明「有模型」和「可靠」是两件事：</p>
       <pre>LLM   根因=主轴轴承磨损复发，振动 12.7 mm/s 超 8.0 阈值        置信度 0.85
 降级  根因=主轴轴承磨损                                          置信度 0.80</pre>
       <p>健康设备进同一个节点时，LLM 输出「无异常证据，不编造根因」，置信度回落到 0.5——这条是防幻觉的验收项。</p>
 
       <h2>三、幂等：应用层检查省钱，数据库级约束保命</h2>
-      <p>巡检定时跑，同一台劣化设备会连续 N 轮越限。每轮都建单，维修班会被刷屏，工单表会烂掉。</p>
-      <p>所以「一台设备同时只允许一张未闭环单」落了两层：入口先查一次，命中就跳过（顺便省掉一次 LLM 诊断调用）；建单函数再兜一次，返回 <code>deduplicated: true</code>。但代码检查挡不住并发——巡检进程和 API 进程可能同时查到「没有未闭环单」。</p>
+      <p>巡检定时跑，同一台劣化设备会连续 N 轮越限。每轮都建单，维修班会被刷屏，工单表会烂掉。所以「一台设备同时只允许一张未闭环单」落了两层：入口先查一次，命中就跳过（顺便省掉一次 LLM 诊断调用）；建单函数再兜一次，返回 <code>deduplicated: true</code>。但代码检查挡不住并发——巡检进程和 API 进程可能同时查到「没有未闭环单」。</p>
       <p>最后落了一道<strong>数据库级不变式</strong>，部分唯一索引：</p>
       <pre>CREATE UNIQUE INDEX ux_work_order_open
   ON work_order(equipment_id) WHERE status IN ('open','assigned','done');</pre>
@@ -69,25 +66,54 @@
       <p>跳级、回退、终态再流转一律抛 <code>WorkOrderError</code>，HTTP 层映射成 <strong>409</strong>。派单必须带 <code>operator</code> 并回填 <code>assignee</code>——「谁派的」和「派给谁」都留痕。</p>
 
       <h2>五、飞书卡片：3 秒预算与就地重绘</h2>
-      <p>工单处置不在浏览器，而在飞书群。报警卡片就是一张随身的工单档案，点「接单 → 已处理 → 确认闭环」后卡片<strong>就地重绘</strong>成下一状态，不新发卡，群里的上下文不被打散。</p>
-      <p>预算来自飞书卡片回调的超时约束：从点击到完成状态校验、落库、回写，必须在 <strong>3 秒预算</strong>内返回（测试里按 2.2 秒卡）。这倒逼状态机流转做得足够轻：确定性代码校验，LLM 不参与实时链路。</p>
+      <p>工单处置不在浏览器，而在飞书群。报警卡片就是一张随身工单，点「接单 → 已处理 → 确认闭环」后卡片<strong>就地重绘</strong>成下一状态，不新发卡。预算来自飞书卡片回调的超时约束：从点击到完成状态校验、落库、回写，必须在 <strong>3 秒预算</strong>内（测试按 2.2 秒卡）。这倒逼状态机流转足够轻：LLM 不进入实时链路。</p>
 
       <h2>六、经验回流：关单即沉淀，知识不留在师傅脑子里</h2>
-      <p>关单时自动把这次处置写成一条可检索的经验，不需要谁专门去知识库页手填。几个刻意取舍：只认 <code>closed</code>（没处置结果的阶段沉淀进去是废料）；幂等键 = <code>source_wo_id</code>（同一张单关几次只产出一条）；沉淀失败不影响关单；时间线写一条 <code>knowledge_sediment</code> 留痕。</p>
-      <p>这条链路落地时抓到一个真 bug：关单占位文案「人工回填闭环」会覆盖 <code>done</code> 阶段填的真实处置，等于把知识库最有价值的一栏写成废话。修法是关单留白不覆盖、API 层透传 <code>body.resolution</code>，并先写一条会失败的用例把它钉住。</p>
+      <p>关单时自动把这次处置写成一条可检索的经验。几个刻意取舍：只认 <code>closed</code>（没处置结果的阶段沉淀进去是废料）；幂等键 = <code>source_wo_id</code>（同一张单关几次只产出一条）；沉淀失败不影响关单；时间线写一条 <code>knowledge_sediment</code> 留痕。</p>
+      <p>这条链路落地时抓到一个真 bug：关单占位文案「人工回填闭环」会覆盖 <code>done</code> 阶段填的真实处置。修法是关单留白不覆盖、API 层透传 <code>body.resolution</code>，并先写一条会失败的用例把它钉住。</p>
 
-      <h2>七、诚实的边界与量化</h2>
-      <p>回归用例 127 项（Python 112 + TypeScript 15），CI 卡在 PR 上。但更该写清楚的是没做和做浅的：</p>
+      <h2>七、守护进程：五个服务，一个入口</h2>
+      <p><code>make up</code> 背后的零依赖守护托管五个服务，各自挂了有不同的后果：</p>
+      <table>
+        <thead><tr><th>服务</th><th>端口</th><th>挂了会怎样</th></tr></thead>
+        <tbody>
+          <tr><td>后端 / API / WebSocket</td><td>3000</td><td>看板白屏、飞书失联</td></tr>
+          <tr><td>Web 前端</td><td>5173</td><td>打不开页面</td></tr>
+          <tr><td>MES API</td><td>8002</td><td>工单、看板、卡片按钮全挂</td></tr>
+          <tr><td>工况模拟器</td><td>—</td><td>曲线停在原地，巡检永远「无异常」</td></tr>
+          <tr><td>班次简报定时器</td><td>—</td><td>收班没人提醒，坑留到下一班</td></tr>
+        </tbody>
+      </table>
+      <p>守护做了四件容易漏的事：子进程退出按指数退避重启（1s → 60s，稳定后归零）；带端口的服务每 5s 探活、连续 3 次失败判僵死并强杀重启；SIGTERM 按进程组整体收尾不留孤儿；给每个服务注入 <code>NO_PROXY</code>——宿主机上的 <code>HTTP_PROXY</code> 会把 127.0.0.1 的探活也代理走。</p>
+      <p>踩坑记录：后端冷启动（tsx 编译）实测 25~40s，默认启动宽限 20s，导致「慢」被误判成「僵死」，重启进入死循环。宽限调到 60s 一次通过——凡是带编译/迁移的服务，别用默认值赌启动速度。</p>
+
+      <h2>八、测试与验收</h2>
+      <p>回归用例 127 项（Python 112 + TypeScript 15），CI 卡在 PR 上。分布如下：</p>
+      <table>
+        <thead><tr><th>文件</th><th>用例</th><th>盯的是什么</th></tr></thead>
+        <tbody>
+          <tr><td><code>test_state_machine.py</code></td><td>15</td><td>状态机非法流转、时间线留痕、数据口径</td></tr>
+          <tr><td><code>test_closed_loop.py</code></td><td>13</td><td>建单幂等（含库级索引）、经验回流、双触发</td></tr>
+          <tr><td><code>test_feishu.py</code></td><td>17</td><td>卡片结构、按钮 payload、webhook 降级</td></tr>
+          <tr><td><code>test_ingest.py</code></td><td>29</td><td>上报鉴权/校验/幂等、模拟器不污染演示库</td></tr>
+          <tr><td><code>test_sediment.py</code></td><td>12</td><td>沉淀字段来源、幂等、开关、失败不阻断</td></tr>
+          <tr><td><code>test_shift_report.py</code></td><td>18</td><td>班次口径、峰值判定、历史还原</td></tr>
+          <tr><td><code>test_agent_nodes.py</code></td><td>8</td><td>诊断/问诊节点（假传输层，不联网不耗 token）</td></tr>
+          <tr><td><code>mes-workorder-actions.test.ts</code></td><td>15</td><td>点击翻译、2.2s 预算、409 翻译、卡片重建</td></tr>
+        </tbody>
+      </table>
+
+      <h2>九、诚实的边界</h2>
+      <p>比藏起来更省事的，是把没做和做浅的写清楚：</p>
       <ul>
-        <li>阈值是示例常量，接真实产线要按设备型号、工况分段；</li>
+        <li>阈值是示例常量（振动 8.0 / 温度 75.0 / 压力 5.5），接真实产线要按设备型号、工况分段；</li>
         <li>故障码靠关键词推断，覆盖不了长尾描述；</li>
-        <li>单机 SQLite 够一条产线用，多车间要换 PostgreSQL；</li>
+        <li>单机 SQLite 够一条产线用，多车间要换 PostgreSQL 并给 <code>metric</code> 分区；</li>
         <li>卡片回调依赖长连接，断线重连期间点按钮会失败，靠重试兜住，但没有本地队列补偿。</li>
       </ul>
-      <p>守护进程也踩过一个典型坑：后端冷启动实测 25~40s，默认启动宽限 20s，导致「慢」被误判成「僵死」，重启进入死循环。宽限调到 60s 一次通过——凡是带编译/迁移的服务，都别用默认值赌启动速度。</p>
 
-      <h2>八、复盘</h2>
-      <p>这个项目最想证明的一件事是：<strong>Agent 的价值不在模型有多强，而在把不可靠的部分关进确定性的格子里</strong>。模型只做判断，代码管写操作，幂等落到数据库约束，状态只认数据库——这几条加起来，才谈得上「闭环可审计」。</p>    </article>
+      <h2>十、复盘</h2>
+      <p>这个项目最想证明的一件事：<strong>Agent 的价值不在模型有多强，而在把不可靠的部分关进确定性的格子里</strong>。模型只做判断，代码管写操作，幂等落到数据库约束，状态只认数据库——这几条加起来，才谈得上「闭环可审计」。</p>    </article>
   </main>
 
   <footer class="site-footer">

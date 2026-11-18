@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>knowledge-agent-workbench 复盘——手写 Workflow 与 LangGraph 双实现对照 · Lau</title>
-  <meta name="description" content="本地 RAG + Agent 工程化项目：SQLite/ChromaDB 双存储、混合检索、手写 Workflow 与 LangGraph 双实现、HITL 审批与 Trace。" />
+  <meta name="description" content="本地 RAG + Agent 工程化项目：SQLite/ChromaDB 双存储、混合检索、手写 Workflow 与 LangGraph 双实现、HITL 审批与 Trace 失败分析。" />
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 216 216'%3E%3Crect width='216' height='216' rx='46' fill='%23171513'/%3E%3Cpath fill='%23d79376' d='M78 68v-8c0-14 10-24 24-24h6v30h10c22 0 38-14 38-34s-16-34-38-34h-18v40h-26v-8c0-14-10-24-24-24h-6v30h-10C12 36 6 50 6 70s6 34 34 34h18V64h26v8c0 14 10 24 24 24h6V66h10c22 0 38 14 38 34s-16 34-38 34h-18v-40h-26v8c0 14-10 24-24 24h-6v-30h-10c-22 0-38-14-38-34s16-34 38-34h18v40h26z'/%3E%3C/svg%3E" />
   <link rel="stylesheet" href="../style.css" />
 </head>
@@ -38,29 +38,42 @@
       <h2>一、为什么做双实现对照</h2>
       <p>框架不是黑盒。只调 LangGraph，出问题时容易停在「它内部怎么走的」；只手写，又容易重复造轮子。把两者并排做一遍，才能讲清差异，也能在排障和面试时给出有依据的判断。</p>
 
+<div class="dwrap"><div class="cap">knowledge-agent-workbench 分层架构（简化）</div><svg viewBox="0 0 640 430" role="img" aria-label="knowledge-agent-workbench 分层架构"><rect x="20" y="20" width="600" height="52" rx="10" class="dnode-clay"/><text x="320" y="46" text-anchor="middle" class="dtitle">前端</text><text x="320" y="70" text-anchor="middle" class="dsub">Vue 3 Web 工作台（Dashboard / 知识库 / 助手 / Workflow / 审批 / Trace）+ Swagger UI</text><line x1="320" y1="72" x2="320" y2="101" class="dline"/><polygon points="315,101 325,101 320,110" class="arrow"/><rect x="20" y="110" width="600" height="64" rx="10" class="dnode"/><text x="320" y="136" text-anchor="middle" class="dtitle">API 层 · FastAPI（src/main.py）</text><text x="320" y="160" text-anchor="middle" class="dsub">文档管理 / RAG 问答 / Agent / Workflow / LangGraph / HITL / Trace</text><line x1="320" y1="174" x2="320" y2="203" class="dline"/><polygon points="315,203 325,203 320,212" class="arrow"/><rect x="20" y="212" width="600" height="78" rx="10" class="dnode"/><text x="320" y="238" text-anchor="middle" class="dtitle">服务层</text><text x="320" y="262" text-anchor="middle" class="dsub">document_service · indexing_service · rag_service(Hybrid Retriever) · AgentState · Tool Registry · HITL · Memory</text><line x1="320" y1="290" x2="320" y2="319" class="dline"/><polygon points="315,319 325,319 320,328" class="arrow"/><rect x="20" y="328" width="340" height="78" rx="10" class="dnode-fill"/><text x="190" y="354" text-anchor="middle" class="dtitle">存储</text><text x="190" y="378" text-anchor="middle" class="dsub">SQLite（文档 / Chunk / 长期记忆）· ChromaDB（向量）· Trace Store</text><rect x="380" y="328" width="240" height="78" rx="10" class="dnode-clay"/><text x="500" y="354" text-anchor="middle" class="dtitle">模型</text><text x="500" y="378" text-anchor="middle" class="dsub">DeepSeek（生成）· bge-small-zh-v1.5（嵌入）</text></svg></div>
+
       <h2>二、双存储与混合检索</h2>
-      <p>SQLite 存文档记录、Chunk 和元数据；ChromaDB 存向量索引。检索走<strong>混合检索</strong>——关键词负责精确，向量负责语义。关键参数都是显式的：<code>MIN_SIMILARITY 0.60</code>、<code>TOP_K 3</code>、<code>CHUNK_SIZE 200 / OVERLAP 40</code>，嵌入用 <code>BAAI/bge-small-zh-v1.5</code>，生成端接 DeepSeek。</p>
+      <p>SQLite 存文档记录、Chunk 和元数据；ChromaDB 存向量索引。检索走<strong>混合检索</strong>——关键词负责精确，向量负责语义。关键参数都是显式的：</p>
+      <table>
+        <thead><tr><th>参数</th><th>默认</th><th>说明</th></tr></thead>
+        <tbody>
+          <tr><td><code>MIN_SIMILARITY</code></td><td>0.60</td><td>最低相似度阈值，低于此值的召回被丢弃</td></tr>
+          <tr><td><code>TOP_K</code></td><td>3</td><td>默认检索数量</td></tr>
+          <tr><td><code>CHUNK_SIZE / OVERLAP</code></td><td>200 / 40</td><td>切分长度与重叠长度</td></tr>
+          <tr><td><code>AGENT_MAX_TOOL_CALLS</code></td><td>5</td><td>Agent 单轮最大工具调用次数</td></tr>
+        </tbody>
+      </table>
       <p>一致性上有个诚实的取舍：SQLite 与 ChromaDB 是<strong>补偿机制，不是跨库强一致事务</strong>——文档更新/删除失败时尝试恢复文件与数据库状态，向量索引也能从 Markdown 重新生成 Embedding 重建。</p>
 
       <h2>三、手写 Workflow：没有任何魔法</h2>
       <p>手写版的状态就是一个显式 dict，节点是函数，边是 if/else。它带节点定义、条件路由、有限补充检索和失败处理。好处是完全可控、好调试；坏处是样板代码多，状态一复杂维护成本就上来。</p>
 
       <h2>四、LangGraph 对照：图表达 + 检查点</h2>
-      <p>LangGraph 把状态管理、节点/边、检查点做成基础设施，同一套流程用图表达更清晰，自带可观测性。代价是得先理解它的状态模型和执行语义，否则出问题时它在黑盒里。</p>
-      <p>两个版本都保留在仓库里，<code>/agent/workflow</code> 走手写版，<code>/agent/langgraph</code> 走图版，可以在同一个 Web 工作台里对比执行轨迹。</p>
+      <p>LangGraph 把状态管理、节点/边、检查点做成基础设施，同一套流程用图表达更清晰，自带可观测性。代价是得先理解它的状态模型和执行语义。两个版本都保留在仓库里，<code>/agent/workflow</code> 走手写版，<code>/agent/langgraph</code> 走图版，可以在同一个 Web 工作台里对比执行轨迹。</p>
 
       <h2>五、HITL 与 Trace：把「可信」落到可操作</h2>
-      <p>高风险工具触发人工批准，支持<strong>批准 / 拒绝 / 修改参数后执行</strong>三种处置。Trace 不只记录，还做失败分析——每条 Trace 能查列表、详情和失败原因。</p>
-      <p>Memory 分两层：短期会话历史裁剪，长期记忆持久化在 SQLite。但长期记忆目前用关键词/BM25 检索，<strong>尚未向量化</strong>——这是写进已知限制的，不是藏起来的。</p>
+      <p>高风险工具触发人工批准，支持<strong>批准 / 拒绝 / 修改参数后执行</strong>三种处置。Trace 不只记录，还做失败分析——每条 Trace 能查列表、详情和失败原因。Memory 分两层：短期会话历史裁剪，长期记忆持久化在 SQLite。</p>
 
       <h2>六、已知限制（诚实地写）</h2>
-      <ul>
-        <li>只支持 Markdown，不支持 PDF / Word / HTML；</li>
-        <li>Trace、HITL、Agent Session 为进程内存储，服务重启后丢失；</li>
-        <li>SQLite 与 ChromaDB 是补偿机制，不是强一致事务；</li>
-        <li>尚未实现用户认证、多租户和细粒度权限；</li>
-        <li>面向本地小规模知识库，未做分布式索引或异步任务队列。</li>
-      </ul>
+      <table>
+        <thead><tr><th>维度</th><th>当前状态</th></tr></thead>
+        <tbody>
+          <tr><td>文档格式</td><td>仅支持 Markdown，不支持 PDF / Word / HTML</td></tr>
+          <tr><td>持久化</td><td>Trace、HITL、Agent Session 为进程内存储，重启后丢失</td></tr>
+          <tr><td>一致性</td><td>SQLite 与 ChromaDB 是补偿机制，不是强一致事务</td></tr>
+          <tr><td>长期记忆</td><td>关键词 / BM25 检索，尚未向量化</td></tr>
+          <tr><td>多租户</td><td>无用户认证、多租户和细粒度权限</td></tr>
+          <tr><td>规模</td><td>面向本地小规模知识库，未做分布式索引</td></tr>
+        </tbody>
+      </table>
 
       <h2>七、复盘</h2>
       <p>这个项目最大的价值不是「又一个 RAG demo」，而是<strong>把框架当成可拆开对照的对象</strong>：知道每个节点在干什么、哪些能力是框架给的、哪些责任仍然在自己身上。面试被问「LangGraph 和手写 Workflow 怎么选」时，回答是有实测依据的，而不是背概念。</p>    </article>
