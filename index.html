@@ -5,6 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>刘悦 Lau · AI Agent / LLM 应用工程师</title>
   <meta name="description" content="刘悦（Lau）—— AI Agent / LLM 应用工程师。关注 Agent 的记忆可信、动作受控与可评测性。开源贡献、项目展示与深度博客。" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="刘悦 Lau · Portfolio" />
+  <meta property="og:title" content="刘悦 Lau · AI Agent / LLM 应用工程师" />
+  <meta property="og:description" content="把 Agent 的记忆可信、动作受控、可评测性，做成工程，而不是口号。开源贡献、项目展示与深度博客。" />
+  <meta property="og:url" content="https://lau0708.github.io/" />
+  <meta property="og:image" content="https://lau0708.github.io/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="刘悦 Lau · AI Agent / LLM 应用工程师" />
+  <meta name="twitter:description" content="把 Agent 的记忆可信、动作受控、可评测性，做成工程，而不是口号。" />
+  <meta name="twitter:image" content="https://lau0708.github.io/og-image.png" />
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23241322'/%3E%3Ctext x='32' y='42' font-size='30' font-family='Georgia,serif' fill='%23ff8fab' text-anchor='middle'%3EL%3C/text%3E%3C/svg%3E" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -29,10 +41,14 @@
   </header>
 
   <main>
-    <section class="hero">
+    <section class="hero" id="top">
+      <div class="hero-bg" aria-hidden="true"></div>
+      <div class="hero-scrim" aria-hidden="true"></div>
+      <div class="hero-micro hero-micro-no" aria-hidden="true">No. 2026</div>
+      <div class="hero-micro hero-micro-scroll" aria-hidden="true">Scroll to immerse</div>
       <div class="wrap hero-inner">
         <div class="hero-copy">
-          <p class="kicker">PORTFOLIO · NO. 2026 — AI AGENT / LLM ENGINEER</p>
+          <p class="kicker kicker-hero">PORTFOLIO · NO. 2026 — AI AGENT / LLM ENGINEER</p>
           <h1 class="hero-name">
             <span class="hero-cn">刘悦</span>
             <span class="hero-en">Lau</span>
@@ -55,7 +71,7 @@
         </div>
       </div>
       <div class="hero-scroll">
-        <span>SCROLL TO EXPLORE</span>
+        <span>FEEL FREE TO KEEP SCROLLING</span>
         <span class="hero-scroll-arrow">↓</span>
       </div>
     </section>
@@ -88,6 +104,7 @@
           <p class="kicker">GALLERY</p>
           <h2>作品片段 · 六个界面，六条设计决策</h2>
           <p class="subtitle">每张图都来自真实仓库，点击进入源码；配套复盘在博客里。</p>
+          <p class="gallery-note">与 AI 共写的视觉档案——不是「做过什么」，而是每一条设计决策当时为什么这样选、被追问时能不能讲清代价。</p>
         </header>
 
         <div class="frag-grid">
@@ -157,6 +174,7 @@
             </div>
           </a>
         </div>
+        <p class="gallery-sign">— Lau · 与 AI 共写的视觉档案</p>
       </div>
     </section>
 
@@ -366,12 +384,13 @@
           <p class="subtitle">以下数字均来自真实仓库与公开记录，不是演示数据。</p>
         </header>
         <div class="pulse-grid">
-          <div class="pulse-cell"><b>4</b><span>展示项目</span></div>
-          <div class="pulse-cell"><b id="stat-pr-total2">13</b><span>PR 提交 · <em id="stat-pr-merged2">5</em> 合并</span></div>
-          <div class="pulse-cell"><b>10</b><span>深度博客</span></div>
-          <div class="pulse-cell"><b>12,958</b><span>单测 · 127 回归</span></div>
-          <div class="pulse-cell"><b>83k★</b><span>目标仓库</span></div>
+          <div class="pulse-cell"><b data-roll="4">4</b><span>展示项目</span></div>
+          <div class="pulse-cell"><b id="stat-pr-total2" data-roll="13">13</b><span>PR 提交 · <em id="stat-pr-merged2">5</em> 合并</span></div>
+          <div class="pulse-cell"><b data-roll="10">10</b><span>深度博客</span></div>
+          <div class="pulse-cell"><b data-roll="12958" data-sep="true">12,958</b><span>单测 · 127 回归</span></div>
+          <div class="pulse-cell"><b data-roll="83" data-suffix="k★">83k★</b><span>目标仓库</span></div>
         </div>
+        <p class="pulse-live">LIVE FROM: github.com/lau0708 · 最近提交 <span id="pulse-last-commit">--</span></p>
         <p class="pulse-status"><span class="dot"></span> STATUS: OPEN TO WORK — 可立即到岗 · 数据更新时间 <span id="pulse-time">--</span></p>
         <div class="pulse-actions">
           <a class="btn btn-light" href="https://github.com/lau0708" target="_blank" rel="noopener">Open GitHub →</a>
@@ -420,6 +439,19 @@
         <div class="blog-more">
           <p>共 10 篇深度复盘，已按时间轴归档。</p>
           <a class="btn btn-solid" href="./blog.html">进入博客档案 · 按时间轴浏览全部 →</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="outro" id="contact">
+      <div class="wrap">
+        <p class="kicker kicker-dark">SHALL WE BUILD?</p>
+        <h2 class="outro-title">让 Agent 可信地工作，<br>而不是漂亮地出错。</h2>
+        <p class="outro-sub">简历 / 邮箱 / GitHub 都在这里，期待一次关于 Agent 工程的对话。</p>
+        <div class="outro-actions">
+          <a class="btn btn-light" href="mailto:lau0708@qq.com">联系我 · lau0708@qq.com</a>
+          <a class="btn btn-ghost-dark" href="https://github.com/lau0708" target="_blank" rel="noopener">GitHub ↗</a>
+          <a class="btn btn-ghost-dark" href="#top">回到顶部 ↑</a>
         </div>
       </div>
     </section>
