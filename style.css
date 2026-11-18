@@ -274,3 +274,26 @@ html[data-theme="dark"] .oss-badge,
 .arrow { fill: var(--muted); }
 .arrow-a { fill: var(--accent); }
 .dline-dash { stroke: var(--muted); stroke-width: 1.2; fill: none; stroke-dasharray: 5 5; }
+
+/* Figures are always rendered on a light canvas (like printed figures),
+   so diagrams stay legible regardless of the page theme. */
+.dwrap { background: #FFFFFF; border-color: #E5E7EB; }
+.dwrap .dnode { fill: #FFFFFF; stroke: #E5E7EB; }
+.dwrap .dnode-fill { fill: #EAF2FB; stroke: #0066CC; }
+.dwrap .dnode-clay { fill: #F5E7DF; stroke: #D79376; }
+.dwrap .dnode-ink { fill: #171513; stroke: #302B25; }
+.dwrap .dtitle { fill: #1D1D1F; }
+.dwrap .dsub { fill: #6E6E73; }
+.dwrap .dlabel { fill: #6E6E73; }
+.dwrap .dline { stroke: #6E6E73; }
+.dwrap .dline-a { stroke: #0066CC; }
+.dwrap .dline-dash { stroke: #9AA7B4; }
+.dwrap .arrow { fill: #6E6E73; }
+.dwrap .arrow-a { fill: #0066CC; }
+.dwrap .dhead { fill: #D79376; }
+.dwrap .dbody { fill: #6E6E73; }
+
+/* Project card metric strip */
+.card .metrics { display: flex; flex-wrap: wrap; gap: 6px 16px; margin-top: 4px; }
+.card .metric { font-size: .8rem; color: var(--muted); white-space: nowrap; }
+.card .metric b { font-weight: 650; color: var(--accent); }
