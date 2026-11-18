@@ -1,31 +1,30 @@
 (function () {
-  var KEY = "lau-theme";
   var root = document.documentElement;
-  var btn = document.getElementById("theme-toggle");
-  if (!btn) return;
 
-  var saved = null;
-  try { saved = localStorage.getItem(KEY); } catch (e) {}
-
-  function apply(theme) {
-    if (theme === "light" || theme === "dark") {
-      root.setAttribute("data-theme", theme);
-    } else {
-      root.removeAttribute("data-theme");
-    }
-    try { localStorage.setItem(KEY, theme); } catch (e) {}
+  // Scroll reveal (opt-in so content stays visible without JS)
+  root.classList.add("js-anim");
+  var revealables = document.querySelectorAll(".frag, .card, .pr-row, .pulse-cell, .pagehead, .work");
+  if ("IntersectionObserver" in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("in");
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: "0px 0px -40px 0px" });
+    revealables.forEach(function (el) { io.observe(el); });
+  } else {
+    revealables.forEach(function (el) { el.classList.add("in"); });
   }
 
-  if (saved === "light" || saved === "dark") apply(saved);
-
-  btn.addEventListener("click", function () {
-    var current = root.getAttribute("data-theme");
-    if (current === "dark") { apply("light"); }
-    else if (current === "light") { apply("dark"); }
-    else {
-      var prefersDark = window.matchMedia &&
-        window.matchMedia("(prefers-color-scheme: dark)").matches;
-      apply(prefersDark ? "light" : "dark");
-    }
-  });
+  // Data center: honest timestamp
+  var timeEl = document.getElementById("pulse-time");
+  if (timeEl) {
+    var pad = function (n) { return String(n).padStart(2, "0"); };
+    var now = new Date();
+    timeEl.textContent =
+      now.getFullYear() + "-" + pad(now.getMonth() + 1) + "-" + pad(now.getDate()) +
+      " " + pad(now.getHours()) + ":" + pad(now.getMinutes());
+  }
 })();

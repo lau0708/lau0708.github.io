@@ -3,9 +3,12 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Lau · AI Agent / LLM 应用工程师</title>
-  <meta name="description" content="刘悦（Lau）—— AI Agent / LLM 应用工程师。关注 Agent 的记忆可信、动作受控与可评测性。开源贡献、项目展示与博客。" />
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 216 216'%3E%3Crect width='216' height='216' rx='46' fill='%23171513'/%3E%3Cpath fill='%23d79376' d='M78 68v-8c0-14 10-24 24-24h6v30h10c22 0 38-14 38-34s-16-34-38-34h-18v40h-26v-8c0-14-10-24-24-24h-6v30h-10C12 36 6 50 6 70s6 34 34 34h18V64h26v8c0 14 10 24 24 24h6V66h10c22 0 38 14 38 34s-16 34-38 34h-18v-40h-26v8c0 14-10 24-24 24h-6v-30h-10c-22 0-38-14-38-34s16-34 38-34h18v40h26z'/%3E%3C/svg%3E" />
+  <title>刘悦 Lau · AI Agent / LLM 应用工程师</title>
+  <meta name="description" content="刘悦（Lau）—— AI Agent / LLM 应用工程师。关注 Agent 的记忆可信、动作受控与可评测性。开源贡献、项目展示与深度博客。" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23241322'/%3E%3Ctext x='32' y='42' font-size='30' font-family='Georgia,serif' fill='%23ff8fab' text-anchor='middle'%3EL%3C/text%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=ZCOOL+XiaoWei&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="./style.css" />
 </head>
 <body>
@@ -13,247 +16,383 @@
     <div class="wrap header-inner">
       <a class="brand" href="./">
         <span class="brand-mark">L</span>
-        <span>Lau<small>AI AGENT ENGINEER</small></span>
+        <span class="brand-text">Lau<small>AI AGENT ENGINEER</small></span>
       </a>
       <nav class="nav">
+        <a href="#gallery">画廊</a>
         <a href="#projects">项目</a>
         <a href="#opensource">开源</a>
         <a href="#blog">博客</a>
-        <a href="https://github.com/lau0708" target="_blank" rel="noopener">GitHub ↗</a>
-        <button class="theme-btn" id="theme-toggle" type="button" aria-label="切换主题">🌓</button>
+        <a class="nav-cta" href="https://github.com/lau0708" target="_blank" rel="noopener">GitHub ↗</a>
       </nav>
     </div>
   </header>
 
-  <section class="hero">
-    <div class="wrap">
-      <p class="eyebrow">AI AGENT / LLM 应用工程师 · 可立即到岗</p>
-      <h1>刘悦 · Lau</h1>
-      <p class="role">把 Agent 的记忆可信、动作受控与可评测性，做成工程，而不是口号</p>
-      <p class="lead">
-        做 Agent 系统，能跑通只是起点。我把更多时间花在三个问题上：
-        <strong>它记住的东西是不是真的</strong>、<strong>它动手之前谁说了算</strong>、
-        <strong>它做完了凭什么说做对了</strong>。下面的项目与贡献，分别从记忆、授权、评测和开源协作四个方向回答这三件事。
-      </p>
-      <div class="hero-actions">
-        <a class="btn primary" href="https://github.com/lau0708" target="_blank" rel="noopener">GitHub 主页</a>
-        <a class="btn" href="mailto:lau0708@qq.com">lau0708@qq.com</a>
-        <a class="btn" href="#blog">读博客</a>
+  <main>
+    <section class="hero">
+      <div class="wrap hero-inner">
+        <div class="hero-copy">
+          <p class="kicker">PORTFOLIO · NO. 2026 — AI AGENT / LLM ENGINEER</p>
+          <h1 class="hero-name">
+            <span class="hero-cn">刘悦</span>
+            <span class="hero-en">Lau</span>
+          </h1>
+          <p class="hero-line">把 Agent 的<em>记忆可信</em>、<em>动作受控</em>、<em>可评测性</em>，做成工程，而不是口号。</p>
+          <div class="hero-actions">
+            <a class="btn btn-solid" href="https://github.com/lau0708" target="_blank" rel="noopener">GitHub 主页 ↗</a>
+            <a class="btn btn-ghost" href="mailto:lau0708@qq.com">lau0708@qq.com</a>
+            <a class="btn btn-ghost" href="#gallery">看作品 ↓</a>
+          </div>
+          <p class="hero-note">可立即到岗 · 华北水利水电大学 计算机科学与技术 2026 届</p>
+        </div>
+        <div class="hero-visual" aria-hidden="true">
+          <figure class="hero-avatar">
+            <img src="https://github.com/lau0708.png" alt="刘悦 Lau 的 GitHub 头像" />
+          </figure>
+          <span class="hero-chip chip-rose">3 PR merged</span>
+          <span class="hero-chip chip-purple">10 篇深度博客</span>
+          <span class="hero-chip chip-yellow">12,958 项单测</span>
+        </div>
       </div>
-      <div class="oss-badge">⭐ 3 个 PR 已合入 bytedance/deer-flow（83k★，LangGraph Agent 框架）</div>
-    </div>
-  </section>
-
-  <section class="section" id="projects">
-    <div class="wrap">
-      <div class="pagehead">
-        <p class="eyebrow">PROJECTS</p>
-        <h2>项目 · 都能在 GitHub 上点开、跑通、复核</h2>
-        <p class="subtitle">简历上的个人项目在这里都有一份完整展示：是什么、解决了什么真实问题、用什么技术、怎么做取舍。</p>
+      <div class="hero-scroll">
+        <span>SCROLL TO EXPLORE</span>
+        <span class="hero-scroll-arrow">↓</span>
       </div>
+    </section>
 
-      <div class="grid">
-        <article class="card">
-          <div class="metrics"><span class="metric"><b>12,958</b> 项单测</span><span class="metric"><b>4</b> 内置 Agent</span><span class="metric"><b>2</b> 层评测</span></div>
-<h3><a href="https://github.com/lau0708/cross-border-crm" target="_blank" rel="noopener">跨境客户经营系统 · Agent 原生 CRM</a></h3>
-          <div class="tags">
-            <span class="tag">TypeScript</span><span class="tag">React</span><span class="tag">Supabase</span>
-            <span class="tag">Mem0</span><span class="tag">Langfuse</span><span class="tag">Multi-Agent</span>
-          </div>
-          <p>面向跨境销售在 WhatsApp 上的客户跟进场景。CRM 存业务事实，Agent 驱动跟进行动，Harness 管执行边界与授权——回答「记忆不可信」「自动跟进危险」「报告会撒谎」三个真实会伤人的问题。</p>
-          <div class="meta">
-            <a href="https://github.com/lau0708/cross-border-crm" target="_blank" rel="noopener">源码 ↗</a>
-            <span>·</span><a href="./posts/cross-border-crm-memory.html">设计笔记 ↗</a>
-          </div>
-        </article>
-
-        <article class="card">
-          <div class="metrics"><span class="metric"><b>127</b> 项回归</span><span class="metric"><b>5</b> 服务守护</span><span class="metric"><b>1</b> 条 DB 幂等索引</span></div>
-<h3><a href="https://github.com/lau0708/pulseops" target="_blank" rel="noopener">PulseOps · 脉巡 — 设备工单闭环 Agent</a></h3>
-          <div class="tags">
-            <span class="tag">Node 20</span><span class="tag">React 19</span><span class="tag">Python</span>
-            <span class="tag">飞书卡片</span><span class="tag">MCP</span>
-          </div>
-          <p>巡检发现异常 → LLM 诊断根因 → 幂等建单 → 飞书推卡片 → 群里点按钮处置 → 关单自动沉淀经验。终点不是「看见异常」，而是「这张单被谁、在什么时候、用什么办法关掉」。</p>
-          <div class="meta">
-            <a href="https://github.com/lau0708/pulseops" target="_blank" rel="noopener">源码 ↗</a>
-            <span>·</span><a href="./posts/pulseops-close-loop.html">设计笔记 ↗</a>
-          </div>
-        </article>
-
-        <article class="card">
-          <div class="metrics"><span class="metric"><b>2</b> 套实现对照</span><span class="metric"><b>6</b> 个页面</span><span class="metric"><b>3</b> 种 HITL 处置</span></div>
-<h3><a href="https://github.com/lau0708/knowledge-agent-workbench" target="_blank" rel="noopener">knowledge-agent-workbench</a></h3>
-          <div class="tags">
-            <span class="tag">Python</span><span class="tag">FastAPI</span><span class="tag">ChromaDB</span>
-            <span class="tag">LangGraph</span><span class="tag">HITL</span>
-          </div>
-          <p>本地 RAG 知识库 + Agent 工作台：SQLite / ChromaDB 双存储索引、混合检索，手写 Workflow 与 LangGraph 双实现对照，HITL 审批与 Trace 监控。</p>
-          <div class="meta">
-            <a href="https://github.com/lau0708/knowledge-agent-workbench" target="_blank" rel="noopener">源码 ↗</a>
-          </div>
-        </article>
-
-        <article class="card">
-          <div class="metrics"><span class="metric"><b>3</b> PR 全合并</span><span class="metric"><b>4</b> 阶段流程</span><span class="metric"><b>83k★</b> 目标仓库</span></div>
-<h3><a href="https://github.com/lau0708/oss-pr-skill" target="_blank" rel="noopener">oss-pr-skill</a></h3>
-          <div class="tags">
-            <span class="tag">Claude Code Skill</span><span class="tag">Shell</span>
-          </div>
-          <p>把「给开源做贡献」固化成证据驱动的流程：仓库筛选、自挖不变量 bug、红绿测试证明、CI 与 review 处理、面试叙事。用它向 deer-flow 提了 3 个 PR，全部已合并。</p>
-          <div class="meta">
-            <a href="https://github.com/lau0708/oss-pr-skill" target="_blank" rel="noopener">源码 ↗</a>
-          </div>
-        </article>
+    <div class="ticker" aria-hidden="true">
+      <div class="ticker-track">
+        <span>MEMORY TRUSTED</span><span>·</span>
+        <span>ACTIONS GOVERNED</span><span>·</span>
+        <span>CLAIMS VERIFIED</span><span>·</span>
+        <span>OPEN SOURCE</span><span>·</span>
+        <span>WORK THAT RUNS</span><span>·</span>
+        <span>MEMORY TRUSTED</span><span>·</span>
+        <span>ACTIONS GOVERNED</span><span>·</span>
+        <span>CLAIMS VERIFIED</span><span>·</span>
+        <span>OPEN SOURCE</span><span>·</span>
+        <span>WORK THAT RUNS</span><span>·</span>
       </div>
     </div>
-  </section>
 
-  <section class="section" id="opensource">
-    <div class="wrap">
-      <div class="pagehead">
-        <p class="eyebrow">OPEN SOURCE</p>
-        <h2>开源贡献 · bytedance/deer-flow（83k★）</h2>
-        <p class="subtitle">三个都是自己挖出来的 bug——没抢 issue、没先问维护者，diff 都很小，修的却是仓库文档里写明、而某个实现悄悄违反的契约。</p>
+    <section class="band">
+      <div class="wrap band-inner">
+        <p class="band-cn">作品不是截图，是能在仓库里点开、跑通、被追问的设计决策。</p>
+        <p class="band-en">VISUAL ARCHIVE — PROJECT FRAGMENTS</p>
       </div>
+    </section>
 
-      <div class="pr-row">
-        <div class="pr-num">#5998</div>
-        <div class="pr-body">
-          <h3><a href="https://github.com/bytedance/deer-flow/pull/5998" target="_blank" rel="noopener">fix(channels): grant sandbox read bits to Feishu/DingTalk inbound uploads</a></h3>
-          <p>为飞书 / 钉钉入站附件补上沙箱读权限位，让文档里承诺的附件读取在实际实现中真正成立。</p>
-          <div class="meta">已合并 · 2026-09-28 · <a href="https://github.com/bytedance/deer-flow/pull/5998" target="_blank" rel="noopener">查看 PR ↗</a></div>
+    <section class="section" id="gallery">
+      <div class="wrap">
+        <header class="pagehead">
+          <p class="kicker">GALLERY</p>
+          <h2>作品片段 · 六个界面，六条设计决策</h2>
+          <p class="subtitle">每张图都来自真实仓库，点击进入源码；配套复盘在博客里。</p>
+        </header>
+
+        <div class="frag-grid">
+          <a class="frag" href="https://github.com/lau0708/cross-border-crm" target="_blank" rel="noopener">
+            <figure class="frag-media">
+              <img src="https://raw.githubusercontent.com/lau0708/cross-border-crm/main/docs/screenshots/inbox-whatsapp.png" loading="lazy" alt="cross-border-crm WhatsApp 收件箱界面" />
+              <span class="frag-no">片段 01</span>
+            </figure>
+            <div class="frag-body">
+              <h3>Agent 原生 CRM · WhatsApp 收件箱</h3>
+              <p>业务事实留在 CRM，Agent 驱动跟进，Harness 管执行边界与授权。</p>
+            </div>
+          </a>
+
+          <a class="frag" href="https://github.com/lau0708/cross-border-crm" target="_blank" rel="noopener">
+            <figure class="frag-media">
+              <img src="https://raw.githubusercontent.com/lau0708/cross-border-crm/main/docs/screenshots/pipeline-shangji.png" loading="lazy" alt="cross-border-crm 商机管道界面" />
+              <span class="frag-no">片段 02</span>
+            </figure>
+            <div class="frag-body">
+              <h3>商机管道 · 可视化漏斗</h3>
+              <p>把销售跟进从一个列表，变成一条可推进、可归因的管道。</p>
+            </div>
+          </a>
+
+          <a class="frag" href="https://github.com/lau0708/cross-border-crm" target="_blank" rel="noopener">
+            <figure class="frag-media">
+              <img src="https://raw.githubusercontent.com/lau0708/cross-border-crm/main/docs/screenshots/lead-detalhe.png" loading="lazy" alt="cross-border-crm 客户详情界面" />
+              <span class="frag-no">片段 03</span>
+            </figure>
+            <div class="frag-body">
+              <h3>客户详情 · 单一权威事实</h3>
+              <p>SQL 是唯一权威，Mem0 只做排序，专家只读、单一写者。</p>
+            </div>
+          </a>
+
+          <a class="frag" href="https://github.com/lau0708/pulseops" target="_blank" rel="noopener">
+            <figure class="frag-media">
+              <img src="https://raw.githubusercontent.com/lau0708/pulseops/main/docs/images/01-device-monitor.png" loading="lazy" alt="PulseOps 设备监控界面" />
+              <span class="frag-no">片段 04</span>
+            </figure>
+            <div class="frag-body">
+              <h3>设备监控 · 巡检入口</h3>
+              <p>终点不是「看见异常」，而是这条异常最终被谁关掉。</p>
+            </div>
+          </a>
+
+          <a class="frag" href="https://github.com/lau0708/pulseops" target="_blank" rel="noopener">
+            <figure class="frag-media">
+              <img src="https://raw.githubusercontent.com/lau0708/pulseops/main/docs/images/02-work-orders.png" loading="lazy" alt="PulseOps 工单界面" />
+              <span class="frag-no">片段 05</span>
+            </figure>
+            <div class="frag-body">
+              <h3>工单闭环 · 谁在什么时候关单</h3>
+              <p>幂等落在部分唯一索引，状态机只认数据库，关单即沉淀经验。</p>
+            </div>
+          </a>
+
+          <a class="frag" href="https://github.com/lau0708/pulseops" target="_blank" rel="noopener">
+            <figure class="frag-media">
+              <img src="https://raw.githubusercontent.com/lau0708/pulseops/main/docs/images/03-knowledge.png" loading="lazy" alt="PulseOps 经验知识界面" />
+              <span class="frag-no">片段 06</span>
+            </figure>
+            <div class="frag-body">
+              <h3>经验沉淀 · 关单即知识</h3>
+              <p>同类故障下次能不能直接查到——这才是决定价值的后半截。</p>
+            </div>
+          </a>
         </div>
       </div>
+    </section>
 
-      <div class="pr-row">
-        <div class="pr-num">#5703</div>
-        <div class="pr-body">
-          <h3><a href="https://github.com/bytedance/deer-flow/pull/5703" target="_blank" rel="noopener">fix(skills): resolve the user-scoped install content scan from its own config</a></h3>
-          <p>用户级安装的内容扫描改从自身配置解析，修掉配置来源不一致导致的扫描失效。</p>
-          <div class="meta">已合并 · 2026-09-22 · <a href="https://github.com/bytedance/deer-flow/pull/5703" target="_blank" rel="noopener">查看 PR ↗</a></div>
+    <section class="section section-alt" id="projects">
+      <div class="wrap">
+        <header class="pagehead">
+          <p class="kicker">PROJECTS</p>
+          <h2>项目 · 都能在 GitHub 上点开、跑通、复核</h2>
+          <p class="subtitle">简历上的个人项目在这里都有一份完整展示：是什么、解决什么真实问题、用什么技术、怎么做取舍。</p>
+        </header>
+
+        <div class="grid">
+          <article class="card">
+            <div class="metrics"><span class="metric"><b>12,958</b> 项单测</span><span class="metric"><b>4</b> 内置 Agent</span><span class="metric"><b>2</b> 层评测</span></div>
+            <h3><a href="https://github.com/lau0708/cross-border-crm" target="_blank" rel="noopener">跨境客户经营系统 · Agent 原生 CRM</a></h3>
+            <div class="tags">
+              <span class="tag">TypeScript</span><span class="tag">React</span><span class="tag">Supabase</span>
+              <span class="tag">Mem0</span><span class="tag">Langfuse</span><span class="tag">Multi-Agent</span>
+            </div>
+            <p>面向跨境销售在 WhatsApp 上的客户跟进场景。CRM 存业务事实，Agent 驱动跟进行动，Harness 管执行边界与授权——回答「记忆不可信」「自动跟进危险」「报告会撒谎」三个真实会伤人的问题。</p>
+            <div class="meta">
+              <a href="https://github.com/lau0708/cross-border-crm" target="_blank" rel="noopener">源码 ↗</a>
+              <span>·</span><a href="./posts/cross-border-crm-memory.html">设计笔记 ↗</a>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="metrics"><span class="metric"><b>127</b> 项回归</span><span class="metric"><b>5</b> 服务守护</span><span class="metric"><b>1</b> 条 DB 幂等索引</span></div>
+            <h3><a href="https://github.com/lau0708/pulseops" target="_blank" rel="noopener">PulseOps · 脉巡 — 设备工单闭环 Agent</a></h3>
+            <div class="tags">
+              <span class="tag">Node 20</span><span class="tag">React 19</span><span class="tag">Python</span>
+              <span class="tag">飞书卡片</span><span class="tag">MCP</span>
+            </div>
+            <p>巡检发现异常 → LLM 诊断根因 → 幂等建单 → 飞书推卡片 → 群里点按钮处置 → 关单自动沉淀经验。终点不是「看见异常」，而是「这张单被谁、在什么时候、用什么办法关掉」。</p>
+            <div class="meta">
+              <a href="https://github.com/lau0708/pulseops" target="_blank" rel="noopener">源码 ↗</a>
+              <span>·</span><a href="./posts/pulseops-close-loop.html">设计笔记 ↗</a>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="metrics"><span class="metric"><b>2</b> 套实现对照</span><span class="metric"><b>6</b> 个页面</span><span class="metric"><b>3</b> 种 HITL 处置</span></div>
+            <h3><a href="https://github.com/lau0708/knowledge-agent-workbench" target="_blank" rel="noopener">knowledge-agent-workbench</a></h3>
+            <div class="tags">
+              <span class="tag">Python</span><span class="tag">FastAPI</span><span class="tag">ChromaDB</span>
+              <span class="tag">LangGraph</span><span class="tag">HITL</span>
+            </div>
+            <p>本地 RAG 知识库 + Agent 工作台：SQLite / ChromaDB 双存储索引、混合检索，手写 Workflow 与 LangGraph 双实现对照，HITL 审批与 Trace 监控。</p>
+            <div class="meta">
+              <a href="https://github.com/lau0708/knowledge-agent-workbench" target="_blank" rel="noopener">源码 ↗</a>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="metrics"><span class="metric"><b>3</b> PR 全合并</span><span class="metric"><b>4</b> 阶段流程</span><span class="metric"><b>83k★</b> 目标仓库</span></div>
+            <h3><a href="https://github.com/lau0708/oss-pr-skill" target="_blank" rel="noopener">oss-pr-skill</a></h3>
+            <div class="tags">
+              <span class="tag">Claude Code Skill</span><span class="tag">Shell</span>
+            </div>
+            <p>把「给开源做贡献」固化成证据驱动的流程：仓库筛选、自挖不变量 bug、红绿测试证明、CI 与 review 处理、面试叙事。用它向 deer-flow 提了 3 个 PR，全部已合并。</p>
+            <div class="meta">
+              <a href="https://github.com/lau0708/oss-pr-skill" target="_blank" rel="noopener">源码 ↗</a>
+            </div>
+          </article>
         </div>
       </div>
+    </section>
 
-      <div class="pr-row">
-        <div class="pr-num">#5663</div>
-        <div class="pr-body">
-          <h3><a href="https://github.com/bytedance/deer-flow/pull/5663" target="_blank" rel="noopener">fix(runtime): share one change position across an atomic thread operation</a></h3>
-          <p>让原子线程操作共享同一个变更位置，消除并发写入时的不一致。</p>
-          <div class="meta">已合并 · 2026-09-22 · <a href="https://github.com/bytedance/deer-flow/pull/5663" target="_blank" rel="noopener">查看 PR ↗</a></div>
+    <section class="section" id="opensource">
+      <div class="wrap">
+        <header class="pagehead">
+          <p class="kicker">OPEN SOURCE</p>
+          <h2>开源贡献 · bytedance/deer-flow（83k★）</h2>
+          <p class="subtitle">三个都是自己挖出来的 bug——没抢 issue、没先问维护者，diff 都很小，修的却是仓库文档里写明、而某个实现悄悄违反的契约。</p>
+        </header>
+
+        <div class="pr-row">
+          <div class="pr-num">#5998</div>
+          <div class="pr-body">
+            <h3><a href="https://github.com/bytedance/deer-flow/pull/5998" target="_blank" rel="noopener">fix(channels): grant sandbox read bits to Feishu/DingTalk inbound uploads</a></h3>
+            <p>为飞书 / 钉钉入站附件补上沙箱读权限位，让文档里承诺的附件读取在实际实现中真正成立。</p>
+            <div class="meta">已合并 · 2026-09-28 · <a href="https://github.com/bytedance/deer-flow/pull/5998" target="_blank" rel="noopener">查看 PR ↗</a></div>
+          </div>
+        </div>
+
+        <div class="pr-row">
+          <div class="pr-num">#5703</div>
+          <div class="pr-body">
+            <h3><a href="https://github.com/bytedance/deer-flow/pull/5703" target="_blank" rel="noopener">fix(skills): resolve the user-scoped install content scan from its own config</a></h3>
+            <p>用户级安装的内容扫描改从自身配置解析，修掉配置来源不一致导致的扫描失效。</p>
+            <div class="meta">已合并 · 2026-09-22 · <a href="https://github.com/bytedance/deer-flow/pull/5703" target="_blank" rel="noopener">查看 PR ↗</a></div>
+          </div>
+        </div>
+
+        <div class="pr-row">
+          <div class="pr-num">#5663</div>
+          <div class="pr-body">
+            <h3><a href="https://github.com/bytedance/deer-flow/pull/5663" target="_blank" rel="noopener">fix(runtime): share one change position across an atomic thread operation</a></h3>
+            <p>让原子线程操作共享同一个变更位置，消除并发写入时的不一致。</p>
+            <div class="meta">已合并 · 2026-09-22 · <a href="https://github.com/bytedance/deer-flow/pull/5663" target="_blank" rel="noopener">查看 PR ↗</a></div>
+          </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <section class="section" id="work">
-    <div class="wrap">
-      <div class="pagehead">
-        <p class="eyebrow">EXPERIENCE</p>
-        <h2>工作经历 · 风越科技（2026.01 – 至今）</h2>
-      </div>
-      <div class="work">
-        <h3>面向跨境电商的 Agent 运行时平台 · AI 应用开发工程师</h3>
-        <p class="org">基于 Craft Agents 构建 Agent Harness 与运行时治理框架</p>
-        <p>让 Agent 在订单、库存、广告、客服工单等多个异构业务后台之间自主完成「发现异常 → 定位根因 → 决策 → 执行」的经营闭环。负责统一数据接入层、工具调用前的集中权限拦截、长链路决策的上下文管理，以及进程隔离与断点恢复。</p>
-      </div>
-    </div>
-  </section>
-
-      <section class="section" id="blog">
-    <div class="wrap">
-      <div class="pagehead">
-        <p class="eyebrow">BLOG</p>
-        <h2>博客 · 项目深度复盘与技术思考</h2>
-      </div>
-
-      <div class="pr-row">
-        <div class="pr-num">2026-11-17</div>
-        <div class="pr-body">
-          <h3><a href="./posts/agent-interview-three-questions.html">Agent 项目面试，面试官真正想问的三件事</a></h3>
-          <p>不是「做没做过」，而是记忆可信、动作受控、可评测性这三件事有没有被工程化。</p>
+    <section class="section section-alt" id="work">
+      <div class="wrap">
+        <header class="pagehead">
+          <p class="kicker">EXPERIENCE</p>
+          <h2>工作经历 · 风越科技（2026.01 – 至今）</h2>
+        </header>
+        <div class="work">
+          <h3>面向跨境电商的 Agent 运行时平台 · AI 应用开发工程师</h3>
+          <p class="org">基于 Craft Agents 构建 Agent Harness 与运行时治理框架</p>
+          <p>让 Agent 在订单、库存、广告、客服工单等多个异构业务后台之间自主完成「发现异常 → 定位根因 → 决策 → 执行」的经营闭环。负责统一数据接入层、工具调用前的集中权限拦截、长链路决策的上下文管理，以及进程隔离与断点恢复。</p>
         </div>
       </div>
+    </section>
 
-      <div class="pr-row">
-        <div class="pr-num">2026-11-15</div>
-        <div class="pr-body">
-          <h3><a href="./posts/cross-border-crm-eval.html">报告会撒谎——用两层评测拦截 Agent 幻觉，并让评测本身不漂移</a></h3>
-          <p>结构断言 + 独立语义 Judge 两层合并，区分三类问题，失败样本进回归，评价绑定运行材料与模型版本。</p>
+    <section class="datacenter" id="datacenter">
+      <div class="wrap">
+        <header class="pagehead pagehead-dark">
+          <p class="kicker kicker-dark">SITE PULSE</p>
+          <h2>数据中心 · 一份诚实的进度快照</h2>
+          <p class="subtitle">以下数字均来自真实仓库与公开记录，不是演示数据。</p>
+        </header>
+        <div class="pulse-grid">
+          <div class="pulse-cell"><b>4</b><span>展示项目</span></div>
+          <div class="pulse-cell"><b>3</b><span>已合并 PR</span></div>
+          <div class="pulse-cell"><b>10</b><span>深度博客</span></div>
+          <div class="pulse-cell"><b>12,958</b><span>单测 · 127 回归</span></div>
+          <div class="pulse-cell"><b>83k★</b><span>目标仓库</span></div>
+        </div>
+        <p class="pulse-status"><span class="dot"></span> STATUS: OPEN TO WORK — 可立即到岗 · 数据更新时间 <span id="pulse-time">--</span></p>
+        <div class="pulse-actions">
+          <a class="btn btn-light" href="https://github.com/lau0708" target="_blank" rel="noopener">Open GitHub →</a>
+          <a class="btn btn-ghost-dark" href="#blog">读深度博客 →</a>
         </div>
       </div>
+    </section>
 
-      <div class="pr-row">
-        <div class="pr-num">2026-11-14</div>
-        <div class="pr-body">
-          <h3><a href="./posts/cross-border-crm-memory.html">cross-border-crm 复盘——让 Agent 在受控边界下读写真实客户数据</a></h3>
-          <p>SQL 唯一权威 + Mem0 只排序、专家只读 + 单一写者、Harness 动作分级、分层评测；12,958 项单测。</p>
+    <section class="section" id="blog">
+      <div class="wrap">
+        <header class="pagehead">
+          <p class="kicker">BLOG</p>
+          <h2>博客 · 项目深度复盘与技术思考</h2>
+        </header>
+
+        <div class="pr-row">
+          <div class="pr-num">2026-11-17</div>
+          <div class="pr-body">
+            <h3><a href="./posts/agent-interview-three-questions.html">Agent 项目面试，面试官真正想问的三件事</a></h3>
+            <p>不是「做没做过」，而是记忆可信、动作受控、可评测性这三件事有没有被工程化。</p>
+          </div>
+        </div>
+
+        <div class="pr-row">
+          <div class="pr-num">2026-11-15</div>
+          <div class="pr-body">
+            <h3><a href="./posts/cross-border-crm-eval.html">报告会撒谎——用两层评测拦截 Agent 幻觉，并让评测本身不漂移</a></h3>
+            <p>结构断言 + 独立语义 Judge 两层合并，区分三类问题，失败样本进回归，评价绑定运行材料与模型版本。</p>
+          </div>
+        </div>
+
+        <div class="pr-row">
+          <div class="pr-num">2026-11-14</div>
+          <div class="pr-body">
+            <h3><a href="./posts/cross-border-crm-memory.html">cross-border-crm 复盘——让 Agent 在受控边界下读写真实客户数据</a></h3>
+            <p>SQL 唯一权威 + Mem0 只排序、专家只读 + 单一写者、Harness 动作分级、分层评测；12,958 项单测。</p>
+          </div>
+        </div>
+
+        <div class="pr-row">
+          <div class="pr-num">2026-11-12</div>
+          <div class="pr-body">
+            <h3><a href="./posts/pulseops-feishu-card.html">飞书卡片 3 秒预算——把一个工单闭环塞进一张卡，还带三级降级</a></h3>
+            <p>就地重绘、3 秒回调预算、Level 0/1/2 三级流式降级链与 Webhook 纯文本兜底。</p>
+          </div>
+        </div>
+
+        <div class="pr-row">
+          <div class="pr-num">2026-11-11</div>
+          <div class="pr-body">
+            <h3><a href="./posts/pulseops-close-loop.html">PulseOps 复盘——设备工单 Agent，为什么终点是「关单」而不是「看见异常」</a></h3>
+            <p>确定性骨架 + 两个 LLM 节点，幂等落在部分唯一索引，状态机只认数据库，关单即沉淀经验，127 项回归。</p>
+          </div>
+        </div>
+
+        <div class="pr-row">
+          <div class="pr-num">2026-11-08</div>
+          <div class="pr-body">
+            <h3><a href="./posts/oss-pr-skill-flow.html">把开源贡献做成可复用的流程——oss-pr-skill 的四个阶段</a></h3>
+            <p>仓库筛选、自挖不变量 bug、红绿测试证明、CI 与 review 处理，最后沉淀成面试叙事。</p>
+          </div>
+        </div>
+
+        <div class="pr-row">
+          <div class="pr-num">2026-11-04</div>
+          <div class="pr-body">
+            <h3><a href="./posts/craft-agents-permission.html">工具执行前的安全边界——PreToolUse 集中拦截与 safe/ask/allow-all</a></h3>
+            <p>SessionToolContext 注入凭据，PreToolUse 集中拦截，三档授权把安全边界从自觉变成管线。</p>
+          </div>
+        </div>
+
+        <div class="pr-row">
+          <div class="pr-num">2026-10-31</div>
+          <div class="pr-body">
+            <h3><a href="./posts/knowledge-agent-workbench-rag.html">knowledge-agent-workbench 复盘——手写 Workflow 与 LangGraph 双实现对照</a></h3>
+            <p>SQLite/ChromaDB 双存储、混合检索，手写与图版双实现，HITL 与 Trace 失败分析，以及诚实的已知限制。</p>
+          </div>
+        </div>
+
+        <div class="pr-row">
+          <div class="pr-num">2026-10-26</div>
+          <div class="pr-body">
+            <h3><a href="./posts/craft-agents-adapter.html">跨境电商 Agent 平台——把 N 个后台收敛成一套工具调用</a></h3>
+            <p>基于 ServerBuilder 设计统一数据源 Adapter，把 MCP 与 HTTP API 收敛成标准工具调用，新数据源接入不改主流程。</p>
+          </div>
+        </div>
+
+        <div class="pr-row">
+          <div class="pr-num">2026-09-30</div>
+          <div class="pr-body">
+            <h3><a href="./posts/deer-flow-3-prs.html">怎么给 83k star 的开源项目提 3 个 PR——测试不对称就是 bug 定位器</a></h3>
+            <p>没抢 issue、没先问维护者，三个 PR 全部合并。复盘一条可复用的启发式：测试不对称就是 bug 定位器。</p>
+          </div>
         </div>
       </div>
-
-      <div class="pr-row">
-        <div class="pr-num">2026-11-12</div>
-        <div class="pr-body">
-          <h3><a href="./posts/pulseops-feishu-card.html">飞书卡片 3 秒预算——把一个工单闭环塞进一张卡，还带三级降级</a></h3>
-          <p>就地重绘、3 秒回调预算、Level 0/1/2 三级流式降级链与 Webhook 纯文本兜底。</p>
-        </div>
-      </div>
-
-      <div class="pr-row">
-        <div class="pr-num">2026-11-11</div>
-        <div class="pr-body">
-          <h3><a href="./posts/pulseops-close-loop.html">PulseOps 复盘——设备工单 Agent，为什么终点是「关单」而不是「看见异常」</a></h3>
-          <p>确定性骨架 + 两个 LLM 节点，幂等落在部分唯一索引，状态机只认数据库，关单即沉淀经验，127 项回归。</p>
-        </div>
-      </div>
-
-      <div class="pr-row">
-        <div class="pr-num">2026-11-08</div>
-        <div class="pr-body">
-          <h3><a href="./posts/oss-pr-skill-flow.html">把开源贡献做成可复用的流程——oss-pr-skill 的四个阶段</a></h3>
-          <p>仓库筛选、自挖不变量 bug、红绿测试证明、CI 与 review 处理，最后沉淀成面试叙事。</p>
-        </div>
-      </div>
-
-      <div class="pr-row">
-        <div class="pr-num">2026-11-04</div>
-        <div class="pr-body">
-          <h3><a href="./posts/craft-agents-permission.html">工具执行前的安全边界——PreToolUse 集中拦截与 safe/ask/allow-all</a></h3>
-          <p>SessionToolContext 注入凭据，PreToolUse 集中拦截，三档授权把安全边界从自觉变成管线。</p>
-        </div>
-      </div>
-
-      <div class="pr-row">
-        <div class="pr-num">2026-10-31</div>
-        <div class="pr-body">
-          <h3><a href="./posts/knowledge-agent-workbench-rag.html">knowledge-agent-workbench 复盘——手写 Workflow 与 LangGraph 双实现对照</a></h3>
-          <p>SQLite/ChromaDB 双存储、混合检索，手写与图版双实现，HITL 与 Trace 失败分析，以及诚实的已知限制。</p>
-        </div>
-      </div>
-
-      <div class="pr-row">
-        <div class="pr-num">2026-10-26</div>
-        <div class="pr-body">
-          <h3><a href="./posts/craft-agents-adapter.html">跨境电商 Agent 平台——把 N 个后台收敛成一套工具调用</a></h3>
-          <p>基于 ServerBuilder 设计统一数据源 Adapter，把 MCP 与 HTTP API 收敛成标准工具调用，新数据源接入不改主流程。</p>
-        </div>
-      </div>
-
-      <div class="pr-row">
-        <div class="pr-num">2026-09-30</div>
-        <div class="pr-body">
-          <h3><a href="./posts/deer-flow-3-prs.html">怎么给 83k star 的开源项目提 3 个 PR——测试不对称就是 bug 定位器</a></h3>
-          <p>没抢 issue、没先问维护者，三个 PR 全部合并。复盘一条可复用的启发式：测试不对称就是 bug 定位器。</p>
-        </div>
-      </div>
-    </div>
-  </section>
+    </section>
+  </main>
 
   <footer class="site-footer">
     <div class="wrap">
-      <a class="brand" href="./">
+      <a class="brand brand-dark" href="./">
         <span class="brand-mark">L</span>
-        <span>Lau<small>AI AGENT ENGINEER</small></span>
+        <span class="brand-text">Lau<small>AI AGENT ENGINEER</small></span>
       </a>
       <p>刘悦 · Lau — 正在找 AI Agent / LLM 应用工程师的机会。</p>
       <div class="row">
