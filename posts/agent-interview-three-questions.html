@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Agent 项目面试，面试官真正想问的三件事 · Lau</title>
-  <meta name="description" content="简历上的 Agent 项目很多，面试官真正想区分的不是做没做过，而是三件事：记忆可信、动作受控、可评测性。" />
+  <meta name="description" content="简历上的 Agent 项目很多，面试官真正想区分的不是做没做过，而是记忆可信、动作受控、可评测性这三件事是否被工程化。" />
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 216 216'%3E%3Crect width='216' height='216' rx='46' fill='%23171513'/%3E%3Cpath fill='%23d79376' d='M78 68v-8c0-14 10-24 24-24h6v30h10c22 0 38-14 38-34s-16-34-38-34h-18v40h-26v-8c0-14-10-24-24-24h-6v30h-10C12 36 6 50 6 70s6 34 34 34h18V64h26v8c0 14 10 24 24 24h6V66h10c22 0 38 14 38 34s-16 34-38 34h-18v-40h-26v8c0 14-10 24-24 24h-6v-30h-10c-22 0-38-14-38-34s16-34 38-34h18v40h26z'/%3E%3C/svg%3E" />
   <link rel="stylesheet" href="../style.css" />
 </head>
@@ -32,18 +32,27 @@
       <p class="post-meta">Lau · 2026-11-17 · 面试复盘</p>
     </header>
     <article>
-      <p>简历上的 Agent 项目越来越多，但面试官真正想区分的，从来不是「你做没做过 Agent」，而是三件更具体的事。<strong>这三件事，恰好也是我所有项目围绕的核心</strong>。</p>
+      <p>简历上的 Agent 项目越来越多，但面试官真正想区分的，从来不是「你做没做过 Agent」，而是三件更具体的事——<strong>恰好也是我所有项目围绕的核心</strong>。</p>
 
       <h2>第一件：它记住的东西是不是真的</h2>
-      <p>当面试官问「你的 Agent 会不会记错」，他不是在考向量库的用法，而是在问<strong>事实源设计</strong>。我的回答是 cross-border-crm：本地 SQL 做唯一权威，Mem0 只做排序不做事实源，远端命中过三重核对，服务异常回退本地并标明覆盖范围。</p>
+      <p>当面试官问「你的 Agent 会不会记错」，他不是在考向量库用法，而是在问<strong>事实源设计</strong>。我的回答是 cross-border-crm：本地 SQL 做唯一权威，Mem0 只做排序不做事实源，远端命中过归属标识 / 运行标识 / 内容哈希三重核对，服务异常回退本地并标明覆盖范围。</p>
 
       <h2>第二件：它动手之前谁说了算</h2>
-      <p>问「Agent 会不会乱发消息、乱写数据」，考的是<strong>授权边界</strong>。我的回答有两层：平台侧用 PreToolUse 集中拦截 + safe/ask/allow-all；业务侧让专家只读、父流程做唯一写者，所有外发动作过独立授权闸门。</p>
+      <p>问「Agent 会不会乱发消息、乱写数据」，考的是<strong>授权边界</strong>。我的回答有两层：平台侧用 PreToolUse 集中拦截 + safe/ask/allow-all；业务侧让专家只读、父流程做唯一写者，Harness 按「读取 / 可逆写入 / 外部动作 / 不可逆动作」分级，外发动作过独立授权闸门。</p>
 
       <h2>第三件：它做完了凭什么说做对了</h2>
-      <p>问「你凭什么说它做对了」，考的是<strong>可评测性</strong>。我的回答是分层评测：先结构断言，再语义 Judge，区分引用未观察、字段矛盾、语义待复核三类问题，并把失败样本做回归，让「越用越准」有据可查。</p>
+      <p>问「你凭什么说它做对了」，考的是<strong>可评测性</strong>。我的回答是分层评测：先结构断言，再语义 Judge，区分引用未观察、字段矛盾、语义待复核三类问题，失败样本进回归，评价绑定运行材料与模型版本——让「越用越准」有据可查。</p>
 
-      <h2>一句话总结</h2>
+      <h2>一张表对照</h2>
+      <p>这三件事分别落在哪些项目里，是可以直接指给面试官看的：</p>
+      <ul>
+        <li><strong>记忆可信</strong> → cross-border-crm（SQL 唯一权威 + Mem0 排序 + 三重核对）；</li>
+        <li><strong>动作受控</strong> → Craft Agents 平台（PreToolUse + 三档授权）与 cross-border-crm（专家只读 + 单一写者）；</li>
+        <li><strong>可评测</strong> → cross-border-crm（两层评测 + 回归）与 knowledge-agent-workbench（Trace 失败分析）；</li>
+        <li><strong>开源协作</strong> → bytedance/deer-flow 3 个已合并 PR + oss-pr-skill。</li>
+      </ul>
+
+      <h2>复盘</h2>
       <p>能把这三种追问落到具体设计和证据上的候选人，比「会调 LangGraph」稀缺得多。面试的本质不是展示你用了多少工具，而是证明你对 Agent 的不可靠有清醒的工程应对。</p>    </article>
   </main>
 

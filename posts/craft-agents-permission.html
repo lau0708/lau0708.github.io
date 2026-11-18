@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>工具执行前的安全边界：PreToolUse 集中拦截与 safe/ask/allow-all · Lau</title>
-  <meta name="description" content="为工具执行建立统一安全边界：SessionToolContext 注入会话与凭据，PreToolUse 集中拦截管线，safe/ask/allow-all 三档模式。" />
+  <title>工具执行前的安全边界——PreToolUse 集中拦截与 safe/ask/allow-all · Lau</title>
+  <meta name="description" content="SessionToolContext 注入会话与凭据，PreToolUse 集中拦截管线，safe/ask/allow-all 三档模式，把安全边界从自觉变成管线。" />
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 216 216'%3E%3Crect width='216' height='216' rx='46' fill='%23171513'/%3E%3Cpath fill='%23d79376' d='M78 68v-8c0-14 10-24 24-24h6v30h10c22 0 38-14 38-34s-16-34-38-34h-18v40h-26v-8c0-14-10-24-24-24h-6v30h-10C12 36 6 50 6 70s6 34 34 34h18V64h26v8c0 14 10 24 24 24h6V66h10c22 0 38 14 38 34s-16 34-38 34h-18v-40h-26v8c0 14-10 24-24 24h-6v-30h-10c-22 0-38-14-38-34s16-34 38-34h18v40h26z'/%3E%3C/svg%3E" />
   <link rel="stylesheet" href="../style.css" />
 </head>
@@ -28,30 +28,36 @@
   <main class="post">
     <a class="back" href="../#blog">← 返回博客</a>
     <header>
-      <h1>工具执行前的安全边界：PreToolUse 集中拦截与 safe/ask/allow-all</h1>
+      <h1>工具执行前的安全边界——PreToolUse 集中拦截与 safe/ask/allow-all</h1>
       <p class="post-meta">Lau · 2026-11-04 · 工作复盘 · 风越科技 Craft Agents 平台</p>
     </header>
     <article>
-      <p>Agent 平台里，工具执行如果没有统一的安全边界，每个工具都会长出自己的一套「能不能做」的判断，最终变成一盘散沙，而且很容易漏。</p>
+      <p>Agent 平台里，工具执行如果没有统一的安全边界，每个工具都会长出自己的一套「能不能做」的判断，最终变成一盘散沙，而且很容易漏。我的做法是把它收敛成一条管线。</p>
 
-      <h2>把会话与凭据放对位置</h2>
-      <p>第一件事是 <strong>SessionToolContext</strong>：把会话信息和凭据注入到工具执行上下文里。工具不再自己到处找「我是谁、我有哪些权限」，而是从统一上下文里取。这样权限判断有了一个稳定的输入。</p>
+      <h2>一、把会话与凭据放对位置</h2>
+      <p>第一件事是 <strong>SessionToolContext</strong>：把会话信息和凭据注入到工具执行上下文。工具不再自己到处找「我是谁、我有哪些权限」，而是从统一上下文里取——权限判断因此有了一个稳定的输入。</p>
 
-      <h2>PreToolUse：一道集中的闸门</h2>
-      <p>第二件事是构建 <strong>PreToolUse 集中拦截管线</strong>——所有工具调用在真正执行之前，都先过这一道闸门。它带来两个好处：</p>
+      <h2>二、PreToolUse：一道集中的闸门</h2>
+      <p>第二件事是构建 <strong>PreToolUse 集中拦截管线</strong>：所有工具调用在真正执行之前，先过这一道闸门。它带来两个好处：</p>
       <ul>
-        <li><strong>集中硬拦截</strong>：不合规的调用在执行前就被拦下，而不是执行完再补救。</li>
-        <li><strong>人在回路回调</strong>：拿不准的动作，回调给人确认，而不是让 Agent 自己猜。</li>
+        <li><strong>集中硬拦截</strong>——不合规的调用在执行前就被拦下，而不是执行完再补救；</li>
+        <li><strong>人在回路回调</strong>——拿不准的动作，回调给人确认，而不是让 Agent 自己猜。</li>
       </ul>
 
-      <h2>safe / ask / allow-all 三档</h2>
+      <h2>三、safe / ask / allow-all 三档</h2>
       <p>拦截不是二元的「放行 / 禁止」，而是三档：</p>
       <ul>
-        <li><strong>safe</strong>——确定安全的操作，直接放行，不打断。</li>
-        <li><strong>ask</strong>——有风险、可逆性不确定的操作，人在回路确认。</li>
+        <li><strong>safe</strong>——确定安全的操作，直接放行，不打断；</li>
+        <li><strong>ask</strong>——有风险、可逆性不确定的操作，人在回路确认；</li>
         <li><strong>allow-all</strong>——明确禁止类操作，直接拦下。</li>
       </ul>
-      <p>这样，新工具接入时自动继承这套边界，而不是每个工具各自实现一遍「安全检查」。安全边界从「每个开发者的自觉」变成了「平台的一条管线」。</p>    </article>
+      <p>这样新工具接入时自动继承这套边界，而不是每个工具各自实现一遍「安全检查」。</p>
+
+      <h2>四、为什么是「集中」而不是「每个工具自己写」</h2>
+      <p>安全边界分散到工具里，有三类必然失败：新工具会忘记写、写法不一致、改规则要改 N 处。集中拦截把「能不能做」从业务逻辑里抽出来，变成一个统一的、可测试的横切面。</p>
+
+      <h2>五、复盘</h2>
+      <p>权限不是给 Agent 上锁，而是<strong>给「不可靠的推理」加一道确定性的门</strong>。safe/ask/allow-all 的意义在于：把判断分成「确定安全」「需要人」「确定禁止」三类，各自用最合适的方式处理，而不是让模型替你做安全决策。</p>    </article>
   </main>
 
   <footer class="site-footer">

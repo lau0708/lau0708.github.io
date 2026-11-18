@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>把开源贡献做成可复用的流程：oss-pr-skill 的四个阶段 · Lau</title>
-  <meta name="description" content="把给开源做贡献固化成证据驱动的流程：仓库筛选、自挖不变量 bug、红绿测试证明、CI 与 review 处理。" />
+  <title>把开源贡献做成可复用的流程——oss-pr-skill 的四个阶段 · Lau</title>
+  <meta name="description" content="把给开源做贡献固化成证据驱动的流程：仓库筛选、自挖不变量 bug、红绿测试证明、CI 与 review 处理，最后沉淀成面试叙事。" />
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 216 216'%3E%3Crect width='216' height='216' rx='46' fill='%23171513'/%3E%3Cpath fill='%23d79376' d='M78 68v-8c0-14 10-24 24-24h6v30h10c22 0 38-14 38-34s-16-34-38-34h-18v40h-26v-8c0-14-10-24-24-24h-6v30h-10C12 36 6 50 6 70s6 34 34 34h18V64h26v8c0 14 10 24 24 24h6V66h10c22 0 38 14 38 34s-16 34-38 34h-18v-40h-26v8c0 14-10 24-24 24h-6v-30h-10c-22 0-38-14-38-34s16-34 38-34h18v40h26z'/%3E%3C/svg%3E" />
   <link rel="stylesheet" href="../style.css" />
 </head>
@@ -28,11 +28,11 @@
   <main class="post">
     <a class="back" href="../#blog">← 返回博客</a>
     <header>
-      <h1>把开源贡献做成可复用的流程：oss-pr-skill 的四个阶段</h1>
+      <h1>把开源贡献做成可复用的流程——oss-pr-skill 的四个阶段</h1>
       <p class="post-meta">Lau · 2026-11-08 · <a href="https://github.com/lau0708/oss-pr-skill" target="_blank" rel="noopener">oss-pr-skill</a></p>
     </header>
     <article>
-      <p>给 <a href="https://github.com/bytedance/deer-flow" target="_blank" rel="noopener">bytedance/deer-flow</a> 提的 3 个 PR 合并之后，我把整条路径固化成了一个 skill：<a href="https://github.com/lau0708/oss-pr-skill" target="_blank" rel="noopener">oss-pr-skill</a>。目标只有一个：让下一次贡献不再从零开始。</p>
+      <p>给 deer-flow 提的 3 个 PR 合并之后，我把整条路径固化成了一个 skill：<a href="https://github.com/lau0708/oss-pr-skill" target="_blank" rel="noopener">oss-pr-skill</a>。目标只有一个：让下一次贡献不再从零开始，并且每一步都可交代。</p>
 
       <h2>阶段一：仓库筛选</h2>
       <p>不是所有仓库都值得投入。先判断三件事：维护者活不活跃、合并通道顺不顺、规则清不清楚。一个没人 review 的仓库，PR 提了也是石沉大海。先看合并历史与 CONTRIBUTING，再决定投不投入。</p>
@@ -41,10 +41,13 @@
       <p>不抢 issue、不先问维护者。直接读代码，找「文档说了什么」和「实现做了什么」之间的裂缝。这类 bug 违背的是仓库自己写下的契约，维护者很难拒绝，而且不需要领域判断。</p>
 
       <h2>阶段三：红绿测试证明</h2>
-      <p>先写一条<strong>会失败的回归测试</strong>，复现 bug（红）；再做最小修复让它通过（绿）。红绿证明让 reviewer 一眼看到问题边界和修复范围，也证明你不是碰运气改对的。</p>
+      <p>先写一条会失败的回归测试复现 bug（红），再做最小修复让它通过（绿）。红绿证明让 reviewer 一眼看到问题边界和修复范围，也证明你不是碰运气改对的。</p>
 
       <h2>阶段四：CI 与 review</h2>
-      <p>盯 CI、认真回应 review。小 diff、带测试、语义清晰，是合并最快的那一类。最后把「问题、决策、动作、结果」沉淀成一条面试叙事——开源贡献真正的价值，一半在 PR 本身，一半在你能否讲清楚它是怎么来的。</p>    </article>
+      <p>盯 CI、认真回应 review。小 diff、带测试、语义清晰，是合并最快的那一类。最后把「问题、决策、动作、结果」沉淀成一条面试叙事——开源贡献真正的价值，一半在 PR 本身，一半在你能否讲清楚它是怎么来的。</p>
+
+      <h2>为什么做成 skill</h2>
+      <p>一次性贡献靠运气，可复用的贡献靠流程。把「找 bug 的启发式」「红绿证明」「review 沟通」固化下来，意味着下一次贡献的时间成本大幅下降，也意味着面试时我能拿出一个<strong>可演示的方法论</strong>，而不是一个孤立的 PR。</p>    </article>
   </main>
 
   <footer class="site-footer">

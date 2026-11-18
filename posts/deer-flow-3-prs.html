@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>怎么给 83k star 的开源项目提 3 个 PR · Lau</title>
-  <meta name="description" content="没有抢 issue、没有先问维护者，给 bytedance/deer-flow 提的 3 个 PR 全部合并。复盘一条可复用的启发式：测试不对称就是 bug 定位器。" />
+  <title>怎么给 83k star 的开源项目提 3 个 PR——测试不对称就是 bug 定位器 · Lau</title>
+  <meta name="description" content="没抢 issue、没先问维护者，三个 PR 全部合并。复盘一条可复用的启发式：同一个接口的多个实现里，没被回归测试覆盖的那个兄弟实现就是 bug 所在。" />
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 216 216'%3E%3Crect width='216' height='216' rx='46' fill='%23171513'/%3E%3Cpath fill='%23d79376' d='M78 68v-8c0-14 10-24 24-24h6v30h10c22 0 38-14 38-34s-16-34-38-34h-18v40h-26v-8c0-14-10-24-24-24h-6v30h-10C12 36 6 50 6 70s6 34 34 34h18V64h26v8c0 14 10 24 24 24h6V66h10c22 0 38 14 38 34s-16 34-38 34h-18v-40h-26v8c0 14-10 24-24 24h-6v-30h-10c-22 0-38-14-38-34s16-34 38-34h18v40h26z'/%3E%3C/svg%3E" />
   <link rel="stylesheet" href="../style.css" />
 </head>
@@ -28,31 +28,34 @@
   <main class="post">
     <a class="back" href="../#blog">← 返回博客</a>
     <header>
-      <h1>怎么给 83k star 的开源项目提 3 个 PR：测试不对称就是 bug 定位器</h1>
-      <p class="post-meta">Lau · 2026-09-30 · 开源贡献复盘</p>
+      <h1>怎么给 83k star 的开源项目提 3 个 PR——测试不对称就是 bug 定位器</h1>
+      <p class="post-meta">Lau · 2026-09-30 · <a href="https://github.com/bytedance/deer-flow" target="_blank" rel="noopener">bytedance/deer-flow</a> 贡献复盘</p>
     </header>
     <article>
-      <p>给 <a href="https://github.com/bytedance/deer-flow" target="_blank" rel="noopener">bytedance/deer-flow</a>（一个 LangGraph Agent 框架）提的 3 个 PR 全部被合并了：</p>
+      <p>给 <a href="https://github.com/bytedance/deer-flow" target="_blank" rel="noopener">bytedance/deer-flow</a>（83k★ 的 LangGraph Agent 框架）提的 3 个 PR，全部被合并：</p>
       <ul>
-        <li><a href="https://github.com/bytedance/deer-flow/pull/5663" target="_blank" rel="noopener">#5663</a> fix(runtime)：让原子线程操作共享同一个变更位置</li>
-        <li><a href="https://github.com/bytedance/deer-flow/pull/5703" target="_blank" rel="noopener">#5703</a> fix(skills)：用户级安装的内容扫描改从自身配置解析</li>
-        <li><a href="https://github.com/bytedance/deer-flow/pull/5998" target="_blank" rel="noopener">#5998</a> fix(channels)：为飞书 / 钉钉入站附件补上沙箱读权限位</li>
+        <li><a href="https://github.com/bytedance/deer-flow/pull/5663" target="_blank" rel="noopener">#5663</a> fix(runtime)：让原子线程操作共享同一个变更位置；</li>
+        <li><a href="https://github.com/bytedance/deer-flow/pull/5703" target="_blank" rel="noopener">#5703</a> fix(skills)：用户级安装的内容扫描改从自身配置解析；</li>
+        <li><a href="https://github.com/bytedance/deer-flow/pull/5998" target="_blank" rel="noopener">#5998</a> fix(channels)：为飞书 / 钉钉入站附件补上沙箱读权限位。</li>
       </ul>
-      <p>三个 PR 的共同点是：<strong>都是自己挖的 bug，没抢 issue，也没先问维护者</strong>。diff 都很小（含测试约 110–145 行），修的却是仓库文档里写明了、而某个实现悄悄违反的契约。</p>
+      <p>三个 PR 的共同点：<strong>都是自己挖的 bug，没抢 issue，也没先问维护者</strong>。diff 都很小（含测试约 110–145 行），修的却是仓库文档里写明了、而某个实现悄悄违反的契约。</p>
 
-      <h2>为什么不从 issue 开始</h2>
-      <p>抢 issue 的路径有三道关卡：要等一个合适的 issue、要和别人竞争、要猜维护者的心意。对第一次给陌生大仓库贡献的人来说，这三道关都在消耗热情。</p>
-      <p>我换了一条路：<strong>直接读代码，找「文档说了什么」和「实现做了什么」之间的裂缝</strong>。这类 bug 不需要领域判断，只需要耐心对照，而且维护者很难拒绝——因为它违背的是仓库自己写下的契约。</p>
+      <h2>一、为什么不从 issue 开始</h2>
+      <p>抢 issue 有三道关卡：要等一个合适的 issue、要和别人竞争、要猜维护者心意。对第一次给陌生大仓库贡献的人来说，这三道关都在消耗热情。我换了一条路：<strong>直接读代码，找「文档说了什么」和「实现做了什么」之间的裂缝</strong>。这类 bug 违背的是仓库自己写下的契约，维护者很难拒绝。</p>
 
-      <h2>一条可复用的启发式</h2>
+      <h2>二、一条可复用的启发式</h2>
       <blockquote><p>测试不对称就是 bug 定位器。</p></blockquote>
-      <p>同一个接口往往有多个实现。如果只有其中一个实现为某个不变量写了回归测试，那么<strong>没被测到的那个「兄弟实现」，大概率就是 bug 所在</strong>。测试写在哪里，就说明作者当时在哪里踩过坑、在哪里没踩过。</p>
-      <p>反过来，这也是一个非常实用的阅读大型代码库的方法：先找测试，测试是作者留下的意图说明书；再找没被测试覆盖的平行实现，那里藏着不一致。</p>
+      <p>同一个接口往往有多个实现。如果只有其中一个实现为某个不变量写了回归测试，那么<strong>没被测到的那个「兄弟实现」，大概率就是 bug 所在</strong>。测试写在哪里，就说明作者当时在哪里踩过坑、在哪里没踩过。反过来，这也是阅读大型代码库的方法：先找测试（作者留下的意图说明书），再找没被覆盖的平行实现。</p>
 
-      <h2>小 diff 也能被认真 review</h2>
-      <p>很多人以为大贡献才值得提。实际上，<strong>小、精确、带回归测试的修复，是最容易被合并的那一类</strong>：review 成本低、风险可控、语义清晰。三个 PR 从提出到合并分别是约 12h、8h、4h。</p>
-      <p>给开源做贡献，难的不是写代码，是找到那个「值得修、修得动、修得对」的点。我把它固化成了一个 skill：<a href="https://github.com/lau0708/oss-pr-skill" target="_blank" rel="noopener">oss-pr-skill</a>，从仓库筛选、自挖 bug、红绿测试证明，到 CI 和 review 处理，全流程可复用。</p>
-    </article>
+      <h2>三、红绿证明</h2>
+      <p>每个修复都先写一条<strong>会失败的回归测试</strong>复现 bug（红），再做最小修复让它通过（绿）。红绿证明让 reviewer 一眼看到问题边界和修复范围，也证明不是碰运气改对的。</p>
+
+      <h2>四、小 diff 也能被认真 review</h2>
+      <p>小、精确、带回归测试的修复，是合并最快的那一类：review 成本低、风险可控、语义清晰。三个 PR 从提出到合并分别约 12h、8h、4h。</p>
+      <p>我把这条路径固化成了一个 skill：<a href="https://github.com/lau0708/oss-pr-skill" target="_blank" rel="noopener">oss-pr-skill</a>，从仓库筛选、自挖 bug、红绿测试证明，到 CI 和 review 处理，全流程可复用。</p>
+
+      <h2>五、复盘</h2>
+      <p>给开源做贡献，难的不是写代码，而是找到那个「值得修、修得动、修得对」的点。测试不对称这条启发式，本质上是在用<strong>作者自己的测试</strong>指认作者自己的疏漏——这是最不容易被拒绝的一类贡献。</p>    </article>
   </main>
 
   <footer class="site-footer">
