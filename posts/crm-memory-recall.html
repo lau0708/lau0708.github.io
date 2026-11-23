@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>记忆召回：为什么「最近 50 条」会漏掉重要事实，语义相似度又救不了它 · Lau</title>
+  <meta name="description" content="从「Mem0 用久了会不会召回远古噪音」一路追问到「最近 50 条」的截断边界，再到 recency 截断与时间衰减的区别，最后落到分类生命周期 + 显式置顶的解法。" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23241322'/%3E%3Ctext x='32' y='42' font-size='30' font-family='Georgia,serif' fill='%23ff8fab' text-anchor='middle'%3EL%3C/text%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="../">
+        <span class="brand-mark">L</span>
+        <span class="brand-text">Lau<small>AI AGENT ENGINEER</small></span>
+      </a>
+      <nav class="nav">
+        <a href="../#projects">项目</a>
+        <a href="../#opensource">开源</a>
+        <a href="../#blog">博客</a>
+        <a href="https://github.com/lau0708" target="_blank" rel="noopener">GitHub ↗</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="post">
+    <a class="back" href="../#blog">← 返回博客</a>
+    <header>
+      <h1>记忆召回：为什么「最近 50 条」会漏掉重要事实，语义相似度又救不了它</h1>
+      <p class="post-meta">Lau · 2026-11-23</p>
+    </header>
+    <article>
+      <p>这篇是一次追问的完整推导，我把中间绕过的每个弯都记下来。起点是一个具体问题：<strong>「Mem0 用久了，会不会把远古噪音也召回来？」</strong>顺着这个问题，我一路挖到「最近 50 条」这个截断边界，发现它挡住了噪音、也误伤了长期事实，最后落到一个「分类生命周期 + 显式置顶」的解法。它值得写下来，因为它展示的是一类问题的解法：当「防噪音」和「防漏召回」互相矛盾时，该怎么拆。</p>
+
+      <h2>一、先说清楚：现在是怎么防远古噪音的</h2>
+      <p>项目里的客户记忆读路径，其实是三道关卡叠在一起：</p>
+      <ul>
+        <li><strong>只存人工确认的事实</strong>——Mem0 里不会堆满模型自己记的杂七杂八的远古上下文；</li>
+        <li><strong>候选池截断到最近 50 条</strong>——读的时候先按创建时间倒序取 50 条，Mem0 只能在这 50 条里排序；</li>
+        <li><strong>远端命中必须映射回本地 ID</strong>——归属、哈希三重核对，对不上就丢弃，最终只返回前 10 条。</li>
+      </ul>
+      <p>所以对这个问题的答案是「有兜底」——但兜底方式不是时间衰减，而是 <strong>recency 截断</strong>。这里就藏着一个必须先厘清的概念。</p>
+
+      <h2>二、两个容易混的概念：recency 截断 与 时间衰减</h2>
+      <p><strong>recency</strong> 是新近程度，recency 截断就是「按时间从新到旧排，只留前 N 条」——第 N+1 条直接出局，和它多重要无关。对应代码里的 <code>order by created_at desc limit 50</code>。</p>
+      <p><strong>时间衰减</strong> 不删任何东西，而是给每条打一个随年龄下降的权重，典型公式是半衰期：<code>权重 = 0.5^(年龄 / 半衰期)</code>。一条 180 天前的记录在半衰期 30 天下权重只剩约 0.016，几乎不影响排序，但它还在池子里。</p>
+      <p>为什么客户记忆选了截断而不是衰减？因为客户偏好这类长期事实<strong>不该随时间自动失效</strong>——客户说「只走海运」，过一年还是对的。用衰减会把这条也洗掉。所以用「最近 50 条」这个粗边界来防远古。</p>
+
+      <h2>三、转折：如果重要事实在 50 条之外呢？</h2>
+      <p>这正是追问里最尖锐的一下。答案是：<strong>对，AI 当次回合确实拿不到它。</strong>但「拿不到」要分三层看，不能笼统地说成「丢了」：</p>
+      <ul>
+        <li><strong>数据没丢</strong>——事实还在本地 SQL 里，AI 读不到不等于数据库里没有；</li>
+        <li><strong>人能看到</strong>——管理端的客户记忆列表窗口更宽，人可以翻到并编辑；</li>
+        <li><strong>AI 上下文被截断</strong>——截断的是「给模型的读窗口」，而且代码会显式标出 <code>coverage: partial</code> 和 <code>readLimit: 50</code>，不会静默假装读全了。</li>
+      </ul>
+      <p>所以更准确的说法是：这是「给模型的上下文窗口」的截断，不是「确认记忆被弄丢」。代价是「长期重要但久未确认」的事实可能被更新的 50 条挤出去，AI 这一轮看不到。</p>
+
+      <h2>四、本质：一刀切截断，误伤了长期事实</h2>
+      <p>到这里问题就清楚了：<strong>不是窗口不够大，而是把「会过期的」和「不会过期的」一视同仁了。</strong>一刀切在 50 条这条线上，防住了远古，也伤到了长期偏好。</p>
+      <p>另一个坑是「语义相似度高 ≠ 仍然有效」。举一个最典型的例子：客户 3 月说过「这批货必须走海运，赶时间」，记成了沟通上下文；11 月问「这客户的运输偏好」，语义检索会因为「海运」这个词把 3 月那条排到最前面——但那是当时一单的临时状态，早过时了。真正该读的是确认过的偏好「长期只走海运」。两条字面几乎一样，一个是事实，一个是噪音。</p>
+
+<div class="dwrap"><div class="cap">把「防噪音」和「防漏召回」拆开：现状用一刀切 recency 截断，A+C 用分类生命周期 + 显式置顶，再用召回命中率验证</div><svg viewBox="0 0 640 470" role="img" aria-label="recency 截断与 A+C 方案对比"><rect x="170" y="20" width="300" height="58" rx="8" class="dnode-clay"/><text x="320" y="45" text-anchor="middle" class="dtitle">读客户记忆（AI 回合）</text><text x="320" y="64" text-anchor="middle" class="dsub">本地确认事实是权威 · Mem0 只排序</text><rect x="36" y="150" width="264" height="58" rx="8" class="dnode"/><text x="168" y="174" text-anchor="middle" class="dtitle">现状：recency 一刀切</text><text x="168" y="194" text-anchor="middle" class="dsub">order by created_at desc limit 50</text><rect x="340" y="150" width="264" height="58" rx="8" class="dnode"/><text x="472" y="174" text-anchor="middle" class="dtitle">A+C：分类 + 置顶</text><text x="472" y="194" text-anchor="middle" class="dsub">preference 不衰减 · pinned 先进窗口</text><rect x="36" y="250" width="264" height="66" rx="8" class="dnode-fill"/><text x="168" y="276" text-anchor="middle" class="dtitle">远古被挡，长期事实也可能被挡</text><text x="168" y="296" text-anchor="middle" class="dsub">第 51 条及以后读不到</text><rect x="340" y="250" width="264" height="66" rx="8" class="dnode-clay"/><text x="472" y="276" text-anchor="middle" class="dtitle">只挡会过期的噪音</text><text x="472" y="296" text-anchor="middle" class="dsub">长期事实显式保活、可审计</text><rect x="170" y="380" width="300" height="58" rx="8" class="dnode-fill"/><text x="320" y="404" text-anchor="middle" class="dtitle">验证：确认记忆召回命中率 + 噪音回流</text><text x="320" y="424" text-anchor="middle" class="dsub">现有评测已能把漏召回标成 needs_review</text><line x1="320" y1="78" x2="168" y2="146" class="dline"/><polygon points="163,138 173,138 168,148" class="arrow"/><line x1="320" y1="78" x2="472" y2="146" class="dline"/><polygon points="467,138 477,138 472,148" class="arrow"/><line x1="168" y1="208" x2="168" y2="246" class="dline"/><polygon points="163,238 173,238 168,248" class="arrow"/><line x1="472" y1="208" x2="472" y2="246" class="dline"/><polygon points="467,238 477,238 472,248" class="arrow"/><line x1="168" y1="316" x2="248" y2="376" class="dline"/><polygon points="243,368 253,368 248,378" class="arrow"/><line x1="472" y1="316" x2="392" y2="376" class="dline"/><polygon points="387,368 397,368 392,378" class="arrow"/></svg></div>
+
+      <h2>五、好的解法：A + C，而不是「把窗口调大」</h2>
+      <p>既然本质是分类没做，解法就不是把 50 改成 500——那会把远古噪音一起放回来。我拆成两步：</p>
+      <ul>
+        <li><strong>A · 按 category 分生命周期</strong>：<code>preference</code> 和 <code>confirmed_fact</code> 是长期事实，不按 recency 硬截断；<code>communication_context</code> 是易过期噪音，才做截断或衰减。这样「防远古」就从「防所有旧东西」精确成「防会过期的旧东西」。</li>
+        <li><strong>C · 显式置顶</strong>：给记忆加 <code>pinned</code> 或 <code>importance</code> 标记，录入时就能标「长期有效」，读的时候置顶的先进窗口。这比靠 <code>created_at</code> 碰运气可靠，而且可审计——为什么一条旧事实还能被读到，是有记录的。</li>
+      </ul>
+      <p>为什么不用统一的时间衰减？因为它会把「只走海运」这种长期事实也随天数降权，过半年就沉底，这正是这个场景最不能接受的。为什么不做全量召回？因为会把语义相似但早已过时的内容一起放回来，成本涨、延迟涨，而且外部服务返回的东西本来就要逐条哈希核对回本地，不可信面太大。</p>
+      <p>还有一个好消息：漏召回现在不是完全静默的。评测层已经有独立确认记忆存在性校验，如果「CRM 里明明有确认记忆、模型却没读到」，报告会被标成 <code>needs_review</code>，不允许它硬说「客户没有这条偏好」。所以 A+C 补的是「检测到漏之后怎么把那条旧事实取回来」的闭环，而不是从零开始做检测。</p>
+
+      <h2>六、面试怎么答：把推导变成一段能背的话</h2>
+      <p>面试时的口播节奏是「先认边界 → 给本质 → 拆两步 → 说代价 → 说验证」：</p>
+      <blockquote>
+        <p>这个问题我特意留了边界：AI 每轮读客户记忆，候选池按时间倒序截最近 50 条，再让外部记忆服务只在这 50 条里排序，好处是防住远古噪音，代价是长期重要的事实如果很久没更新，被挤到 50 条之外，这轮就读不到。我的解法不是把窗口调大，而是拆两步——按事实类型分生命周期，偏好和确认事实不衰减、沟通上下文才截断；再给重要事实一个显式置顶通道。验证用召回命中率看「该读的有没有漏」、用噪音回流看「旧的有没有回流」，而且评测层已经能把漏召回标成 needs_review，这个改动是把「检测到漏」之后「怎么补取」补上。</p>
+      </blockquote>
+      <p>两个高频追问也要提前备好：<strong>「为什么不用时间衰减」</strong>——因为衰减会把长期偏好也洗掉，衰减只适合会过期的信号；<strong>「为什么不全量召回」</strong>——因为全量会把远古噪音一起放回来，成本和不可信面都变大，应该先解决「谁有资格进候选池」，再谈召回范围。</p>
+
+      <h2>七、收尾</h2>
+      <p>回头看，这个问题真正的价值不在「选截断还是选衰减」，而在于：<strong>「防噪音」和「防漏召回」是一个 trade-off，不是两个可以分别优化的独立功能。</strong>把客户记忆按「会不会过期」分类，再用置顶把「长期重要」变成显式状态，就是把这对矛盾从「碰运气」变成「可设计、可审计」。想清楚这一点，面试里无论怎么追问，都追不出窟窿。</p>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="row">
+        <a href="mailto:lau0708@qq.com">lau0708@qq.com</a>
+        <a href="https://github.com/lau0708" target="_blank" rel="noopener">github.com/lau0708</a>
+        <a href="../">返回首页</a>
+      </div>
+    </div>
+  </footer>
+  <script src="../script.js"></script>
+</body>
+</html>
