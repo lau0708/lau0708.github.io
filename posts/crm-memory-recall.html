@@ -50,6 +50,9 @@
 
       <p>为什么客户记忆选了截断而不是衰减？因为客户偏好这类长期事实<strong>不该随时间自动失效</strong>——客户说「只走海运」，过一年还是对的。用衰减会把这条也洗掉。所以用「最近 50 条」这个粗边界来防远古。</p>
 
+      <div class="dwrap"><div class="cap">同框对比：recency 截断是阶梯——前 50 条权重为 1，第 50 条之后直接归零；时间衰减是平滑曲线——越旧越低，但永不归零。</div><svg viewBox="0 0 640 360" role="img" aria-label="recency 截断与时间衰减同框对比"><text x="320" y="18" text-anchor="middle" class="dtitle">recency 截断（阶梯）vs 时间衰减（平滑）</text><rect x="60" y="34" width="14" height="10" rx="2" fill="#D79376"/><text x="82" y="44" class="dlabel">recency 截断：第 50 条直接归零</text><rect x="286" y="34" width="14" height="10" rx="2" fill="#B76E79"/><text x="308" y="44" class="dlabel">时间衰减：平滑下降、永不归零</text><line x1="60" y1="60" x2="60" y2="300" class="dline"/><line x1="60" y1="300" x2="590" y2="300" class="dline"/><text x="50" y="64" text-anchor="end" class="dlabel">1.0</text><text x="50" y="184" text-anchor="end" class="dlabel">0.5</text><text x="50" y="304" text-anchor="end" class="dlabel">0</text><line x1="60" y1="180" x2="590" y2="180" class="dline-dash"/><text x="60" y="318" text-anchor="middle" class="dlabel">0</text><text x="192.5" y="318" text-anchor="middle" class="dlabel">25</text><text x="325" y="318" text-anchor="middle" class="dlabel">50 条</text><text x="457.5" y="318" text-anchor="middle" class="dlabel">75</text><text x="590" y="318" text-anchor="middle" class="dlabel">100</text><text x="325" y="340" text-anchor="middle" class="dsub">记忆从新到旧（越右越旧）</text><polyline points="60,60 325,60 325,300 590,300" fill="none" stroke="#D79376" stroke-width="2.5"/><polyline points="60,60 192.5,180 325,240 457.5,270 590,285" fill="none" stroke="#B76E79" stroke-width="2"/><circle cx="192.5" cy="180" r="4" fill="#B76E79"/><circle cx="325" cy="240" r="4" fill="#B76E79"/><text x="335" y="80" class="dlabel" fill="#B76E79">→ 之后权重 = 0</text></svg></div>
+
+
       <h2>三、转折：如果重要事实在 50 条之外呢？</h2>
       <p>这正是追问里最尖锐的一下。答案是：<strong>对，AI 当次回合确实拿不到它。</strong>但「拿不到」要分三层看，不能笼统地说成「丢了」：</p>
       <ul>
